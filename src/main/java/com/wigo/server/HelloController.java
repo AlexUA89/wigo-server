@@ -11,7 +11,7 @@ public class HelloController {
 
     @RequestMapping("/")
     public String index() {
-        return "Леха, это все уже готовый сервак, который ты можешь конфигурить, как хочешь. Если тебе хочется изобретать велосипед, то я просто возьму пачку попкорна)";
+        return "ssssss";
     }
 
 }
