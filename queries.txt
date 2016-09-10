@@ -4,6 +4,7 @@ POST /status
 {"latitude": 12.345,
 "longitude": 67.890,
 "name": "hello, world!",
+"text": "good place!!!",
 "start_date", "2012-04-23T18:25:43.511Z",
 "end_date": "2012-04-23T18:25:43.511Z"}
 response:
@@ -14,6 +15,7 @@ POST /status/gerh9serh97
 {"latitude": 12.345,
 "longitude": 67.890,
 "name": "hello, world!",
+"text": "good place!!!",
 "start_date", "2012-04-23T18:25:43.511Z",
 "end_date": "2012-04-23T18:25:43.511Z"}
 response:
@@ -33,6 +35,7 @@ response:
 "latitude": 12.345,
 "longitude": 67.890,
 "name": "hello, world!",
+"text": "good place!!!",
 "start_date", "2012-04-23T18:25:43.511Z",
 "end_date": "2012-04-23T18:25:43.511Z",
 "user": {"id":"r0her78er6", "name":"john"}}]
