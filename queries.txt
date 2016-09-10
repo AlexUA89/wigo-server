@@ -1,4 +1,4 @@
-REST API
+REST API, add /api to all requests
 
 POST /status
 {"latitude": 12.345,
