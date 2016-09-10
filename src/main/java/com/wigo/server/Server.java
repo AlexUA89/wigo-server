@@ -1,13 +1,16 @@
 package com.wigo.server;
 
+import com.fatboyindustrial.gsonjavatime.Converters;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import com.google.gson.*;
 import spark.Request;
 import spark.Response;
 
+import java.lang.reflect.Type;
 import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.Date;
 
 import static spark.Spark.*;
@@ -15,7 +18,7 @@ import static spark.Spark.*;
 public class Server {
     public static void main(String[] args) {
         port(args.length < 1 ? 8080 : Integer.parseInt(args[0]));
-        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ssX").create();
+        Gson gson = Converters.registerAll(new GsonBuilder()).create();
         get("/api/status", Server::getStatus, gson::toJson);
         get("/api/status/:id/message", Server::getStatusMessage, gson::toJson);
     }
@@ -28,8 +31,8 @@ public class Server {
                                 .put("longitude", 67.890)
                                 .put("name", "hello, world!")
                                 .put("text", "good place!!!")
-                                .put("start_date", Date.from(Instant.parse("2012-04-23T18:25:43.511Z")))
-                                .put("end_date", Date.from(Instant.parse("2012-04-23T18:25:43.511Z")))
+                                .put("start_date", Instant.parse("2012-04-23T18:25:43.511Z"))
+                                .put("end_date", Instant.parse("2012-04-23T18:25:43.511Z"))
                                 .put("user", ImmutableMap.of("id", "r0her78er6", "name", "John")).build()));
     }
 
@@ -37,7 +40,7 @@ public class Server {
         return ImmutableMap.of("list", ImmutableList.of(ImmutableMap.of(
                 "text", "hi!!",
                 "user", ImmutableMap.of("id", "r0her78er6", "name", "John"),
-                "created", Date.from(Instant.parse("2012-04-23T18:25:43.511Z"))
+                "created", Instant.parse("2012-04-23T18:25:43.511Z")
         )));
     }
 }
