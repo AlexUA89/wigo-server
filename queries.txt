@@ -1,0 +1,58 @@
+possible statuses: ok, fail (together with error_text field)
+
+
+create status:
+{"query_id": "25",
+"query": "create_status",
+"latitude": 12.345,
+"longitude": 67.890,
+"name": "hello, world!",
+"start_date", "2012-04-23T18:25:43.511Z",
+"end_date": "2012-04-23T18:25:43.511Z"}
+
+{"query_id": "25",
+"query": "create_status",
+"result": "ok",
+"status_id": "100500"}
+or
+{"query_id": "25",
+"query": "create_status",
+"result": "fail",
+"error_text": "Temporary unavailable"}
+
+
+write message:
+{"query_id": "2636",
+"query": "write_message",
+"status_id": "100500",
+"text": "Hi, good event"
+}
+
+{"query_id": "2636",
+"query": "write_message",
+"result": "ok",
+"message_id": "73"
+}
+
+
+get statuses:
+{"query_id": "25",
+"query": "get_statuses",
+"latitude_from": 12.345,
+"latitude_to": 13.789,
+"longitude_from": 67.890,
+"longitude_to": 69.262,
+"date_from", "2012-04-23T18:25:43.511Z",
+"date_to": "2012-04-23T18:25:43.511Z"}
+
+{"query_id": "2636",
+"query": "write_message",
+"result": "ok",
+"statuses":
+[{"status_id": "100500",
+"latitude": 12.345,
+"longitude": 67.890,
+"name": "hello, world!",
+"start_date", "2012-04-23T18:25:43.511Z",
+"end_date": "2012-04-23T18:25:43.511Z"}]
+}
