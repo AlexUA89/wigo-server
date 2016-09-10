@@ -45,7 +45,7 @@ response:
 GET /status/100500/message
 response:
 {"list": [
-{"text":"hi!!", "user": {"id":"r0her78er6", "name":"john"}, "date":"2012-04-23T18:25:43.511Z"}
+{"text":"hi!!", "user": {"id":"r0her78er6", "name":"john"}, "created":"2012-04-23T18:25:43.511Z"}
 ]}
 
 
@@ -53,3 +53,10 @@ POST /status/100500/message
 {"text": "Hi, good event"}
 response:
 {"id": "rg8er7g8er"}
+
+
+POST /login
+{"type": "facebook",
+"token": "WEGgGg43g43g5J356345"}
+response:
+{"name": "Alex"}

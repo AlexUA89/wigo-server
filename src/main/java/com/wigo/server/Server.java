@@ -37,7 +37,7 @@ public class Server {
         return ImmutableMap.of("list", ImmutableList.of(ImmutableMap.of(
                 "text", "hi!!",
                 "user", ImmutableMap.of("id", "r0her78er6", "name", "John"),
-                "date", Date.from(Instant.parse("2012-04-23T18:25:43.511Z"))
+                "created", Date.from(Instant.parse("2012-04-23T18:25:43.511Z"))
         )));
     }
 }
