@@ -1,35 +1,52 @@
-REST API, params could be specified via body or URL params
+REST API
 
-/create_status
+POST /status
 {"latitude": 12.345,
 "longitude": 67.890,
 "name": "hello, world!",
 "start_date", "2012-04-23T18:25:43.511Z",
 "end_date": "2012-04-23T18:25:43.511Z"}
-
-{"status_id": "100500"}
-
-
-/write_message
-{"status_id": "100500",
-"text": "Hi, good event"}
-
-{"message_id": "73"}
+response:
+{"id": "gerh9serh97"}
 
 
-/get_statuses
+POST /status/gerh9serh97
+{"latitude": 12.345,
+"longitude": 67.890,
+"name": "hello, world!",
+"start_date", "2012-04-23T18:25:43.511Z",
+"end_date": "2012-04-23T18:25:43.511Z"}
+response:
+<empty>
+
+
+GET /status
 {"latitude_from": 12.345,
 "latitude_to": 13.789,
 "longitude_from": 67.890,
 "longitude_to": 69.262,
 "date_from", "2012-04-23T18:25:43.511Z",
 "date_to": "2012-04-23T18:25:43.511Z"}
-
-{"statuses":
-[{"status_id": "100500",
+response:
+{"list":
+[{"id": "er70hserh",
 "latitude": 12.345,
 "longitude": 67.890,
 "name": "hello, world!",
 "start_date", "2012-04-23T18:25:43.511Z",
-"end_date": "2012-04-23T18:25:43.511Z"}]
+"end_date": "2012-04-23T18:25:43.511Z",
+"user": {"id":"r0her78er6", "name":"john"}}]
 }
+
+
+GET /status/100500/message
+response:
+{"list": [
+{"text":"hi!!", "user": {"id":"r0her78er6", "name":"john"}, "date":"2012-04-23T18:25:43.511Z"}
+]}
+
+
+POST /status/100500/message
+{"text": "Hi, good event"}
+response:
+{"id": "rg8er7g8er"}
