@@ -3,7 +3,7 @@ REST API, add /api to all requests
 POST /status
 {"latitude": 12.345,
 "longitude": 67.890,
-"name": "hello, world!",
+"name": "message, world!",
 "text": "good place!!!",
 "start_date", "2012-04-23T18:25:43.511Z",
 "end_date": "2012-04-23T18:25:43.511Z"}
@@ -14,7 +14,7 @@ response:
 POST /status/gerh9serh97
 {"latitude": 12.345,
 "longitude": 67.890,
-"name": "hello, world!",
+"name": "message, world!",
 "text": "good place!!!",
 "start_date", "2012-04-23T18:25:43.511Z",
 "end_date": "2012-04-23T18:25:43.511Z"}
@@ -34,7 +34,7 @@ response:
 [{"id": "er70hserh",
 "latitude": 12.345,
 "longitude": 67.890,
-"name": "hello, world!",
+"name": "message, world!",
 "text": "good place!!!",
 "start_date", "2012-04-23T18:25:43.511Z",
 "end_date": "2012-04-23T18:25:43.511Z",
