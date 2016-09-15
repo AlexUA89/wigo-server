@@ -7,6 +7,8 @@ public class StatusDto {
 
     private UUID id;
 
+    private UUID userId;
+
     private double latitude;
 
     private double longitude;
@@ -14,8 +16,6 @@ public class StatusDto {
     private String name;
 
     private String text;
-
-    private UserDto user;
 
     private Instant startDate;
 
@@ -25,13 +25,13 @@ public class StatusDto {
 
     }
 
-    public StatusDto(UUID id, double latitude, double longitude, String name, String text, UserDto user, Instant startDate, Instant endDate) {
+    public StatusDto(UUID id, UUID userId, double latitude, double longitude, String name, String text, Instant startDate, Instant endDate) {
         this.id = id;
+        this.userId = userId;
         this.latitude = latitude;
         this.longitude = longitude;
         this.name = name;
         this.text = text;
-        this.user = user;
         this.startDate = startDate;
         this.endDate = endDate;
     }
@@ -42,6 +42,14 @@ public class StatusDto {
 
     public void setId(UUID id) {
         this.id = id;
+    }
+
+    public UUID getUserId() {
+        return userId;
+    }
+
+    public void setUserId(UUID userId) {
+        this.userId = userId;
     }
 
     public double getLatitude() {
@@ -74,14 +82,6 @@ public class StatusDto {
 
     public void setText(String text) {
         this.text = text;
-    }
-
-    public UserDto getUser() {
-        return user;
-    }
-
-    public void setUser(UserDto user) {
-        this.user = user;
     }
 
     public Instant getStartDate() {

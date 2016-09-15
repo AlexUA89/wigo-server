@@ -1,15 +1,18 @@
 package com.wigo.server.dto;
 
 import java.time.Instant;
+import java.util.UUID;
 
 /**
  * Created by AlexUA on 9/11/2016.
  */
 public class MessageDto {
 
-    private String message;
+    private UUID id;
 
-    private UserDto user;
+    private UUID userId;
+
+    private String message;
 
     private Instant created;
 
@@ -17,10 +20,27 @@ public class MessageDto {
 
     }
 
-    public MessageDto(String message, UserDto user, Instant created) {
+    public MessageDto(UUID id, UUID userId, String message, Instant created) {
+        this.id = id;
+        this.userId = userId;
         this.message = message;
-        this.user = user;
         this.created = created;
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public UUID getUserId() {
+        return userId;
+    }
+
+    public void setUserId(UUID userId) {
+        this.userId = userId;
     }
 
     public String getMessage() {
@@ -29,14 +49,6 @@ public class MessageDto {
 
     public void setMessage(String message) {
         this.message = message;
-    }
-
-    public UserDto getUser() {
-        return user;
-    }
-
-    public void setUser(UserDto user) {
-        this.user = user;
     }
 
     public Instant getCreated() {
