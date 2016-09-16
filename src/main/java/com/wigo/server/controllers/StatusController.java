@@ -36,10 +36,10 @@ public class StatusController {
         return messageDao.getMessages(statusId);
     }
 
-//    @PutMapping(path = WigoEndpionts.STATUS)
-//    public List<StatusDto> putStatus() {
-//        return statusDao.createStatus();
-//    }
+    @PutMapping(path = WigoEndpionts.STATUS)
+    public UUID putStatus(@RequestBody StatusDto status) {
+        return statusDao.createStatus(status);
+    }
 
 
 }
