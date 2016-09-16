@@ -1,1 +1,0 @@
-psql postgres -f create_tables.sql

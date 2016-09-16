@@ -12,7 +12,7 @@ public class MessageDto {
 
     private UUID userId;
 
-    private String message;
+    private String text;
 
     private Instant created;
 
@@ -20,10 +20,10 @@ public class MessageDto {
 
     }
 
-    public MessageDto(UUID id, UUID userId, String message, Instant created) {
+    public MessageDto(UUID id, UUID userId, String text, Instant created) {
         this.id = id;
         this.userId = userId;
-        this.message = message;
+        this.text = text;
         this.created = created;
     }
 
@@ -43,12 +43,12 @@ public class MessageDto {
         this.userId = userId;
     }
 
-    public String getMessage() {
-        return message;
+    public String getText() {
+        return text;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setText(String text) {
+        this.text = text;
     }
 
     public Instant getCreated() {

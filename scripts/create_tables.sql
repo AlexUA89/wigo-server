@@ -1,23 +1,23 @@
 CREATE TABLE users (
     id          UUID PRIMARY KEY,
-    name        varchar
+    name        varchar NOT NULL
 );
 
 CREATE TABLE statuses (
     id          UUID PRIMARY KEY,
-    user_id     UUID REFERENCES users,
-    latitude    decimal(9, 6),
-    longitude   decimal(9, 6),
-    name        varchar,
-    text        varchar,
+    user_id     UUID NOT NULL REFERENCES users,
+    latitude    decimal(9, 6) NOT NULL,
+    longitude   decimal(9, 6) NOT NULL,
+    name        varchar NOT NULL,
+    text        varchar NOT NULL,
     start_date  timestamp,
     end_date    timestamp
 );
 
 CREATE TABLE messages (
     id          UUID PRIMARY KEY,
-    status_id   UUID REFERENCES statuses,
-    user_id     UUID REFERENCES users,
-    text        varchar,
-    created     timestamp
+    status_id   UUID NOT NULL REFERENCES statuses,
+    user_id     UUID NOT NULL REFERENCES users,
+    text        varchar NOT NULL,
+    created     timestamp NOT NULL
 );
