@@ -15,11 +15,15 @@ import java.util.UUID;
 @RestController
 @RequestMapping(WigoEndpionts.API_URL)
 public class StatusController {
-    @Autowired
-    private StatusDao statusDao;
+    private final StatusDao statusDao;
+
+    private final MessageDao messageDao;
 
     @Autowired
-    private MessageDao messageDao;
+    public StatusController(StatusDao statusDao, MessageDao messageDao) {
+        this.statusDao = statusDao;
+        this.messageDao = messageDao;
+    }
 
     @GetMapping(path = WigoEndpionts.STATUS)
     public List<StatusDto> getStatuses() {

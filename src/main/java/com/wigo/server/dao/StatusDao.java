@@ -2,6 +2,7 @@ package com.wigo.server.dao;
 
 import com.wigo.server.dto.StatusDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
@@ -36,8 +37,5 @@ public class StatusDao {
         return jdbcTemplate.query(GET_STATUSES_SQL, statusDtoMapper);
     }
 
-    private static final RowMapper<StatusDto> statusDtoMapper = (r, i) ->
-            new StatusDto(UUID.fromString(r.getString("id")), UUID.fromString(r.getString("user_id")),
-                    r.getDouble("latitude"), r.getDouble("longitude"), r.getString("name"), r.getString("text"),
-                    r.getTimestamp("start_date").toInstant(), r.getTimestamp("end_date").toInstant());
+    private final RowMapper<StatusDto> statusDtoMapper = new BeanPropertyRowMapper<>(StatusDto.class);
 }

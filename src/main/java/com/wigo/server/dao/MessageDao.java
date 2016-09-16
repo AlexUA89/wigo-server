@@ -1,7 +1,9 @@
 package com.wigo.server.dao;
 
 import com.wigo.server.dto.MessageDto;
+import com.wigo.server.dto.StatusDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -27,7 +29,5 @@ public class MessageDao {
         return jdbcTemplate.query(GET_MESSAGES_SQL, new MapSqlParameterSource("id", statusId), messageDtoMapper);
     }
 
-    private static final RowMapper<MessageDto> messageDtoMapper = (r, i) ->
-            new MessageDto(UUID.fromString(r.getString("id")), UUID.fromString(r.getString("user_id")),
-                    r.getString("text"), r.getTimestamp("created").toInstant());
+    private final RowMapper<MessageDto> messageDtoMapper = new BeanPropertyRowMapper<>(MessageDto.class);
 }
