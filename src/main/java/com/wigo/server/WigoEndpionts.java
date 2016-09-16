@@ -5,7 +5,7 @@ public class WigoEndpionts {
 
     public static final String API_URL = "/api";
 
-    public static final String GET_STATUSES_STUB = "/status";
-    public static final String GET_MESSAGES_OF_STATUS_STUB = "/status/{statusId}/messages";
+    public static final String STATUS = "/status";
+    public static final String MESSAGES_OF_STATUS = "/status/{statusId}/messages";
 
 }
