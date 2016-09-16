@@ -4,6 +4,7 @@ package com.wigo.server.controllers;
 import com.wigo.server.WigoEndpionts;
 import com.wigo.server.dao.MessageDao;
 import com.wigo.server.dao.StatusDao;
+import com.wigo.server.dao.StatusSearchParams;
 import com.wigo.server.dto.MessageDto;
 import com.wigo.server.dto.StatusDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +27,8 @@ public class StatusController {
     }
 
     @GetMapping(path = WigoEndpionts.STATUS)
-    public List<StatusDto> getStatuses() {
-        return statusDao.getStatuses();
+    public List<StatusDto> getStatuses(@ModelAttribute StatusSearchParams searchParams) {
+        return statusDao.getStatuses(searchParams);
     }
 
     @GetMapping(path = WigoEndpionts.MESSAGES_OF_STATUS)
