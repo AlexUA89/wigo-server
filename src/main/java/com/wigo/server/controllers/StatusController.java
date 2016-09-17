@@ -5,8 +5,10 @@ import com.wigo.server.WigoEndpionts;
 import com.wigo.server.dao.MessageDao;
 import com.wigo.server.dao.StatusDao;
 import com.wigo.server.dao.StatusSearchParams;
+import com.wigo.server.dao.UserDao;
 import com.wigo.server.dto.MessageDto;
 import com.wigo.server.dto.StatusDto;
+import com.wigo.server.dto.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,13 +20,14 @@ import java.util.UUID;
 @RequestMapping(WigoEndpionts.API_URL)
 public class StatusController {
     private final StatusDao statusDao;
-
     private final MessageDao messageDao;
+    private final UserDao userDao;
 
     @Autowired
-    public StatusController(StatusDao statusDao, MessageDao messageDao) {
+    public StatusController(StatusDao statusDao, MessageDao messageDao, UserDao userDao) {
         this.statusDao = statusDao;
         this.messageDao = messageDao;
+        this.userDao = userDao;
     }
 
     @GetMapping(path = WigoEndpionts.STATUS)
@@ -55,5 +58,10 @@ public class StatusController {
         // TODO: user from session
         message.setCreated(Instant.now());
         return messageDao.createMessage(statusId, message);
+    }
+
+    @GetMapping(path = WigoEndpionts.USER)
+    public UserDto getUser(@PathVariable("userId") UUID userId) {
+        return userDao.getUser(userId);
     }
 }

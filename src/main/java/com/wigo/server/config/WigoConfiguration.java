@@ -4,11 +4,14 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.web.client.RestOperations;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import java.util.List;
@@ -16,6 +19,11 @@ import java.util.List;
 @Configuration
 @ComponentScan({"com.wigo.server.controllers", "com.wigo.server.config"})
 public class WigoConfiguration extends WebMvcConfigurerAdapter {
+
+    @Bean
+    public RestOperations restOperations(RestTemplateBuilder builder) {
+        return builder.build();
+    }
 
     @Bean
     public ObjectMapper objectMapper(){

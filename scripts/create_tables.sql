@@ -1,6 +1,7 @@
 CREATE TABLE users (
     id          UUID PRIMARY KEY,
-    name        varchar NOT NULL
+    name        varchar NOT NULL,
+    email       varchar UNIQUE NOT NULL
 );
 
 CREATE TABLE statuses (

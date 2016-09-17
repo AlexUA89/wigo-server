@@ -44,6 +44,7 @@ public class StatusDao {
     }
 
     public void updateStatus(StatusDto status) {
+        // TODO: exract permission check from dao
         if (jdbcTemplate.update(UPDATE_STATUS_SQL, beanParameterSource(status)) == 0)
             throw new DataRetrievalFailureException("Status doesn't exist or belongs to another user");
     }
