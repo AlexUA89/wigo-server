@@ -50,6 +50,6 @@ public class WigoConfiguration extends WebMvcConfigurerAdapter {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         String[] allVerbs = Arrays.stream(HttpMethod.values()).map(HttpMethod::toString).toArray(String[]::new);
-        registry.addMapping("**").allowedMethods(allVerbs);
+        registry.addMapping("/**").allowedMethods(allVerbs);
     }
 }
