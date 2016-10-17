@@ -22,7 +22,7 @@ public class StatusDao {
             "select id, user_id, latitude, longitude, name, text, start_date, end_date from statuses " +
                     "where latitude between :startLatitude and :endLatitude and " +
                     "longitude between :startLongitude and :endLongitude and " +
-                    "start_date < :endDate and end_date > :startDate";
+                    "(start_date < :endDate or start_date is null) and (end_date > :startDate or end_date is null)";
     private static final String UPDATE_STATUS_SQL =
             "update statuses set latitude = :latitude, longitude = :longitude, name = :name, text = :text, " +
                     "start_date = :startDate, end_date = :endDate where id = :id and user_id = :userId";
