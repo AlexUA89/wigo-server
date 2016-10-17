@@ -20,9 +20,9 @@ import static com.wigo.server.dao.DaoUtils.joinParameterSources;
 
 @Repository
 public class UserDao {
-    private static final String GET_USER_SQL = "select id, name from users where id = :userId";
-    private static final String GET_USER_BY_EMAIL_SQL = "select id, name from users where email = :email";
-    private static final String UPDATE_USER_SQL = "update users set name = :name where email = :email";
+    private static final String GET_USER_SQL = "select id, nickname, name from users where id = :userId";
+    private static final String GET_USER_BY_EMAIL_SQL = "select id, nickname, name from users where email = :email";
+    private static final String UPDATE_USER_SQL = "update users set name = :name, nickname = :nickname where email = :email";
 
     private final RowMapper<UserDto> userDtoMapper = new BeanPropertyRowMapper<>(UserDto.class);
     private final NamedParameterJdbcTemplate jdbcTemplate;
@@ -31,7 +31,7 @@ public class UserDao {
     @Autowired
     public UserDao(DataSource dataSource) {
         this.jdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
-        insertUser = new SimpleJdbcInsert(dataSource).withTableName("users").usingColumns("id", "name", "email");
+        insertUser = new SimpleJdbcInsert(dataSource).withTableName("users").usingColumns("id", "nickname", "name", "email");
     }
 
     public UserDto getUser(UUID userId) {

@@ -30,7 +30,7 @@ public class LoginController {
         // TODO: add transaction support
         // TODO: add cookie setting
         FbData fbData = restOperations.getForObject(FB_ME_URL, FbData.class, loginData.getFbToken());
-        UserDto user = new UserDto(null, fbData.name);
+        UserDto user = new UserDto(null, fbData.name, fbData.name);
         UserDto oldUser = userDao.getUserByEmail(fbData.email);
         if (oldUser == null)
             userDao.createUser(fbData.email, user);
