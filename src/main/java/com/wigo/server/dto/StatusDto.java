@@ -21,11 +21,13 @@ public class StatusDto {
 
     private Instant endDate;
 
+    private StatusKind kind;
+
     public StatusDto(){
 
     }
 
-    public StatusDto(UUID id, UUID userId, double latitude, double longitude, String name, String text, Instant startDate, Instant endDate) {
+    public StatusDto(UUID id, UUID userId, double latitude, double longitude, String name, String text, Instant startDate, Instant endDate, StatusKind kind) {
         this.id = id;
         this.userId = userId;
         this.latitude = latitude;
@@ -34,6 +36,7 @@ public class StatusDto {
         this.text = text;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.kind = kind;
     }
 
     public UUID getId() {
@@ -98,5 +101,17 @@ public class StatusDto {
 
     public void setEndDate(Instant endDate) {
         this.endDate = endDate;
+    }
+
+    public StatusKind getKind() {
+        return kind;
+    }
+
+    public void setKind(StatusKind kind) {
+        this.kind = kind;
+    }
+
+    public enum StatusKind {
+        event, chat
     }
 }

@@ -13,7 +13,8 @@ CREATE TABLE statuses (
     name        varchar NOT NULL,
     text        varchar NOT NULL,
     start_date  timestamp,
-    end_date    timestamp
+    end_date    timestamp,
+    kind        varchar NOT NULL check (kind in ('event', 'chat'))
 );
 
 CREATE TABLE messages (

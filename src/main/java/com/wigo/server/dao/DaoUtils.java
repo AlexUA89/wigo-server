@@ -15,7 +15,8 @@ public class DaoUtils {
             @Override
             public Object getValue(String paramName) throws IllegalArgumentException {
                 Object v = super.getValue(paramName);
-                return v instanceof Instant ? Timestamp.from((Instant) v) : v;
+                return v instanceof Instant ? Timestamp.from((Instant) v) :
+                        v instanceof Enum ? v.toString() : v;
             }
         };
     }

@@ -19,13 +19,13 @@ import static com.wigo.server.dao.DaoUtils.beanParameterSource;
 @Repository
 public class StatusDao {
     private static final String GET_STATUSES_SQL =
-            "select id, user_id, latitude, longitude, name, text, start_date, end_date from statuses " +
+            "select id, user_id, latitude, longitude, name, text, start_date, end_date, kind from statuses " +
                     "where latitude between :startLatitude and :endLatitude and " +
                     "longitude between :startLongitude and :endLongitude and " +
                     "(start_date < :endDate or start_date is null) and (end_date > :startDate or end_date is null)";
     private static final String UPDATE_STATUS_SQL =
             "update statuses set latitude = :latitude, longitude = :longitude, name = :name, text = :text, " +
-                    "start_date = :startDate, end_date = :endDate where id = :id and user_id = :userId";
+                    "start_date = :startDate, end_date = :endDate, kind = :kind where id = :id and user_id = :userId";
 
     private final NamedParameterJdbcTemplate jdbcTemplate;
     private final SimpleJdbcInsert insertStatus;
@@ -34,7 +34,7 @@ public class StatusDao {
     public StatusDao(DataSource dataSource) {
         this.jdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
         insertStatus = new SimpleJdbcInsert(dataSource).withTableName("statuses")
-                .usingColumns("id", "user_id", "latitude", "longitude", "name", "text", "start_date", "end_date");
+                .usingColumns("id", "user_id", "latitude", "longitude", "name", "text", "start_date", "end_date", "kind");
     }
 
     public UUID createStatus(StatusDto status) {
