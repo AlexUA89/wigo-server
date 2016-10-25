@@ -64,4 +64,9 @@ public class StatusController {
     public UserDto getUser(@PathVariable("userId") UUID userId) {
         return userDao.getUser(userId);
     }
+
+    @GetMapping(path = {WigoEndpionts.HASHTAGS})
+    public List<String> gethashtags(@RequestParam("prefix") String prefix, @RequestParam("limit") int limit) {
+        return statusDao.getTopHashtags(prefix, limit);
+    }
 }

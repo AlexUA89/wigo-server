@@ -17,6 +17,11 @@ CREATE TABLE statuses (
     kind        varchar NOT NULL check (kind in ('event', 'chat'))
 );
 
+CREATE TABLE status_hashtags (
+    status_id   UUID NOT NULL REFERENCES statuses,
+    hashtag     varchar not null
+);
+
 CREATE TABLE messages (
     id          UUID PRIMARY KEY,
     status_id   UUID NOT NULL REFERENCES statuses,

@@ -5,6 +5,7 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.util.regex.Pattern;
 
 public class DaoUtils {
     public static Instant MIN_INSTANT = Instant.parse("1900-01-01T00:00:00Z");
@@ -53,5 +54,11 @@ public class DaoUtils {
                 return getSource(s).getTypeName(s);
             }
         };
+    }
+
+    private static final Pattern LIKE_CHARS = Pattern.compile("[\\[%_\\\\]");
+
+    public static String escapeLike(String s) {
+        return LIKE_CHARS.matcher(s).replaceAll("\\\\1");
     }
 }

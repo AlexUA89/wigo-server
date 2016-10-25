@@ -1,6 +1,7 @@
 package com.wigo.server.dto;
 
 import java.time.Instant;
+import java.util.Set;
 import java.util.UUID;
 
 public class StatusDto {
@@ -23,11 +24,13 @@ public class StatusDto {
 
     private StatusKind kind;
 
+    private Set<String> hashtags;
+
     public StatusDto(){
 
     }
 
-    public StatusDto(UUID id, UUID userId, double latitude, double longitude, String name, String text, Instant startDate, Instant endDate, StatusKind kind) {
+    public StatusDto(UUID id, UUID userId, double latitude, double longitude, String name, String text, Instant startDate, Instant endDate, StatusKind kind, Set<String> hashtags) {
         this.id = id;
         this.userId = userId;
         this.latitude = latitude;
@@ -37,6 +40,7 @@ public class StatusDto {
         this.startDate = startDate;
         this.endDate = endDate;
         this.kind = kind;
+        this.hashtags = hashtags;
     }
 
     public UUID getId() {
@@ -109,6 +113,14 @@ public class StatusDto {
 
     public void setKind(StatusKind kind) {
         this.kind = kind;
+    }
+
+    public Set<String> getHashtags() {
+        return hashtags;
+    }
+
+    public void setHashtags(Set<String> hashtags) {
+        this.hashtags = hashtags;
     }
 
     public enum StatusKind {

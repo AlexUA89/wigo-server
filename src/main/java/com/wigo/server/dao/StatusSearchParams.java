@@ -1,6 +1,7 @@
 package com.wigo.server.dao;
 
 import java.time.Instant;
+import java.util.Set;
 
 import static com.wigo.server.dao.DaoUtils.MAX_INSTANT;
 import static com.wigo.server.dao.DaoUtils.MIN_INSTANT;
@@ -15,6 +16,7 @@ public class StatusSearchParams {
     private double endLongitude = 1e4;
     private Instant startDate = MIN_INSTANT;
     private Instant endDate = MAX_INSTANT;
+    private Set<String> hashtags;
 
     public double getStartLatitude() {
         return startLatitude;
@@ -62,5 +64,13 @@ public class StatusSearchParams {
 
     public void setEndDate(Instant endDate) {
         this.endDate = endDate;
+    }
+
+    public Set<String> getHashtags() {
+        return hashtags;
+    }
+
+    public void setHashtags(Set<String> hashtags) {
+        this.hashtags = hashtags;
     }
 }
