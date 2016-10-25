@@ -123,7 +123,4 @@ public class StatusDto {
         this.hashtags = hashtags;
     }
 
-    public enum StatusKind {
-        event, chat
-    }
 }
