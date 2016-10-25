@@ -1,6 +1,7 @@
 package com.wigo.server.dto;
 
 import java.time.Instant;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
@@ -24,7 +25,7 @@ public class StatusDto {
 
     private StatusKind kind;
 
-    private Set<String> hashtags;
+    private Set<String> hashtags = new HashSet<>();
 
     public StatusDto(){
 
