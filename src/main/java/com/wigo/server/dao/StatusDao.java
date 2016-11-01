@@ -4,13 +4,13 @@ import com.wigo.server.dto.StatusDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.sql.DataSource;
 import java.util.*;
@@ -20,8 +20,10 @@ import static com.wigo.server.dao.DaoUtils.beanParameterSource;
 import static com.wigo.server.dao.DaoUtils.escapeLike;
 import static java.util.Collections.disjoint;
 import static java.util.stream.Collectors.*;
+import static org.springframework.transaction.annotation.Isolation.READ_COMMITTED;
 
 @Repository
+@Transactional(isolation = READ_COMMITTED)
 public class StatusDao {
     private static final String GET_STATUSES_SQL =
             "select id, user_id, latitude, longitude, name, text, start_date, end_date, kind from statuses " +
@@ -52,7 +54,6 @@ public class StatusDao {
     }
 
     public UUID createStatus(StatusDto status) {
-        // TODO: add transaction support
         status.setId(UUID.randomUUID());
         insertStatus.execute(beanParameterSource(status));
         insertHashtags(status);
@@ -66,7 +67,6 @@ public class StatusDao {
     }
 
     public void updateStatus(StatusDto status) {
-        // TODO: add transaction support
         // TODO: exract permission check from dao
         if (jdbcTemplate.update(UPDATE_STATUS_SQL, beanParameterSource(status)) == 0)
             throw new DataRetrievalFailureException("Status doesn't exist or belongs to another user");
@@ -75,14 +75,13 @@ public class StatusDao {
     }
 
     public List<StatusDto> getStatuses(StatusSearchParams searchParams) {
-        // TODO: add transaction support
         List<StatusDto> res = jdbcTemplate.query(GET_STATUSES_SQL, beanParameterSource(searchParams), statusDtoMapper);
         if (!res.isEmpty()) {
             Map<UUID, Set<String>> hashtags = jdbcTemplate.query(GET_HASHTAGS_SQL,
                     new MapSqlParameterSource("ids", res.stream().map(StatusDto::getId).collect(Collectors.toSet())),
                     statusHashtagMapper).stream().collect(
                     groupingBy(StatusHashtag::getStatusId, mapping(StatusHashtag::getHashtag, toSet())));
-            res.forEach(s->s.setHashtags(hashtags.get(s.getId())));
+            res.stream().forEach(s -> s.setHashtags(hashtags.getOrDefault(s.getId(), s.getHashtags())));
         }
         if (searchParams.getHashtags() != null)
             res.removeIf(s -> disjoint(s.getHashtags(), searchParams.getHashtags()));

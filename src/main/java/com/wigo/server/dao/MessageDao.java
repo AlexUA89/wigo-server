@@ -1,15 +1,14 @@
 package com.wigo.server.dao;
 
 import com.wigo.server.dto.MessageDto;
-import com.wigo.server.dto.StatusDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.sql.DataSource;
 import java.util.List;
@@ -17,8 +16,10 @@ import java.util.UUID;
 
 import static com.wigo.server.dao.DaoUtils.beanParameterSource;
 import static com.wigo.server.dao.DaoUtils.joinParameterSources;
+import static org.springframework.transaction.annotation.Isolation.READ_COMMITTED;
 
 @Repository
+@Transactional(isolation = READ_COMMITTED)
 public class MessageDao {
     private static final String GET_MESSAGES_SQL =
             "select id, user_id, text, created from messages where status_id = :id";
