@@ -36,15 +36,16 @@ public class StatusController {
     }
 
     @PostMapping(path = WigoEndpionts.STATUS)
-    public UUID postStatus(@RequestBody StatusDto status) {
-        // TODO: user from session
+    public UUID postStatus(@RequestBody StatusDto status, @RequestAttribute("userId") UUID userId) {
+        status.setUserId(userId);
         return statusDao.createStatus(status);
     }
 
     @PatchMapping(path = WigoEndpionts.PATCH_STATUS)
-    public void patchStatus(@PathVariable("statusId") UUID statusId, @RequestBody StatusDto status) {
+    public void patchStatus(@PathVariable("statusId") UUID statusId, @RequestBody StatusDto status,
+                            @RequestAttribute("userId") UUID userId) {
         status.setId(statusId);
-        // TODO: user from session
+        status.setUserId(userId);
         statusDao.updateStatus(status);
     }
 
@@ -54,8 +55,9 @@ public class StatusController {
     }
 
     @PostMapping(path = WigoEndpionts.MESSAGES_OF_STATUS)
-    public UUID postMessage(@PathVariable("statusId") UUID statusId, @RequestBody MessageDto message) {
-        // TODO: user from session
+    public UUID postMessage(@PathVariable("statusId") UUID statusId, @RequestBody MessageDto message,
+                            @RequestAttribute("userId") UUID userId) {
+        message.setUserId(userId);
         message.setCreated(Instant.now());
         return messageDao.createMessage(statusId, message);
     }
@@ -66,7 +68,7 @@ public class StatusController {
     }
 
     @GetMapping(path = {WigoEndpionts.HASHTAGS})
-    public List<String> gethashtags(@RequestParam("prefix") String prefix, @RequestParam("limit") int limit) {
+    public List<String> getHashtags(@RequestParam("prefix") String prefix, @RequestParam("limit") int limit) {
         return statusDao.getTopHashtags(prefix, limit);
     }
 }

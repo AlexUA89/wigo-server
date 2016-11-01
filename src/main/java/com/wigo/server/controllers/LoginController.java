@@ -2,14 +2,11 @@ package com.wigo.server.controllers;
 
 import com.wigo.server.WigoEndpionts;
 import com.wigo.server.dao.UserDao;
+import com.wigo.server.dto.LoginDto;
 import com.wigo.server.dto.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestOperations;
-import org.springframework.web.client.RestTemplate;
 
 @RestController
 @RequestMapping(WigoEndpionts.API_URL)
@@ -18,17 +15,19 @@ public class LoginController {
             "fields=id,name,first_name,middle_name,last_name,email,link&format=json&sdk=android";
     private final UserDao userDao;
     private final RestOperations restOperations;
+    private final JwtLogic jwtLogic;
 
     @Autowired
-    public LoginController(UserDao userDao, RestOperations restOperations) {
+    public LoginController(UserDao userDao, RestOperations restOperations, JwtLogic jwtLogic) {
         this.userDao = userDao;
         this.restOperations = restOperations;
+        this.jwtLogic = jwtLogic;
     }
 
     @PostMapping(path = WigoEndpionts.LOGIN)
-    public UserDto login(@RequestBody LoginData loginData) {
+    public LoginDto login(@RequestBody LoginData loginData) {
+        // TODO: add remote logout support
         // TODO: add transaction support
-        // TODO: add cookie setting
         FbData fbData = restOperations.getForObject(FB_ME_URL, FbData.class, loginData.getFbToken());
         UserDto user = new UserDto(null, fbData.name, fbData.name);
         UserDto oldUser = userDao.getUserByEmail(fbData.email);
@@ -38,7 +37,7 @@ public class LoginController {
             user.setId(oldUser.getId());
             userDao.updateUserByEmail(fbData.email, user);
         }
-        return user;
+        return new LoginDto(user, jwtLogic.getJwtToken(user.getId()));
     }
 
     public static class LoginData {
