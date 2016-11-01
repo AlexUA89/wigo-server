@@ -12,6 +12,8 @@ public class MessageDto {
 
     private UUID userId;
 
+    private String nickname;
+
     private String text;
 
     private Instant created;
@@ -20,9 +22,10 @@ public class MessageDto {
 
     }
 
-    public MessageDto(UUID id, UUID userId, String text, Instant created) {
+    public MessageDto(UUID id, UUID userId, String nickname, String text, Instant created) {
         this.id = id;
         this.userId = userId;
+        this.nickname = nickname;
         this.text = text;
         this.created = created;
     }
@@ -57,5 +60,13 @@ public class MessageDto {
 
     public void setCreated(Instant created) {
         this.created = created;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 }

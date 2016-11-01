@@ -22,7 +22,8 @@ import static org.springframework.transaction.annotation.Isolation.READ_COMMITTE
 @Transactional(isolation = READ_COMMITTED)
 public class MessageDao {
     private static final String GET_MESSAGES_SQL =
-            "select id, user_id, text, created from messages where status_id = :id";
+            "select messages.id, user_id, nickname, text, created from messages join users on user_id=users.id " +
+                    "where status_id = :id";
 
     private final RowMapper<MessageDto> messageDtoMapper = new BeanPropertyRowMapper<>(MessageDto.class);
     private final NamedParameterJdbcTemplate jdbcTemplate;
