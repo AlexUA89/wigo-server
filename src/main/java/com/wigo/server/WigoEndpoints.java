@@ -1,7 +1,6 @@
 package com.wigo.server;
 
-// TODO: rename to WigoEndpoints
-public class WigoEndpionts {
+public class WigoEndpoints {
     public static final String API_URL = "/api";
 
     public static final String STATUS = "/status";

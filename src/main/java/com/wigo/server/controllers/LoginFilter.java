@@ -1,6 +1,6 @@
 package com.wigo.server.controllers;
 
-import com.wigo.server.WigoEndpionts;
+import com.wigo.server.WigoEndpoints;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -32,7 +32,7 @@ public class LoginFilter implements Filter {
         RequestMethod meth = RequestMethod.valueOf(hreq.getMethod());
         String path = hreq.getServletPath();
         if (MUTATING_METHODS.contains(meth) &&
-                !path.equals(WigoEndpionts.API_URL + WigoEndpionts.LOGIN) && !path.equals("/error")) {
+                !path.equals(WigoEndpoints.API_URL + WigoEndpoints.LOGIN) && !path.equals("/error")) {
             String authHeader = hreq.getHeader("Authorization");
             if (authHeader == null) {
                 hres.setStatus(SC_UNAUTHORIZED);

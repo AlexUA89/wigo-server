@@ -1,6 +1,6 @@
 package com.wigo.server.controllers;
 
-import com.wigo.server.WigoEndpionts;
+import com.wigo.server.WigoEndpoints;
 import com.wigo.server.dao.UserDao;
 import com.wigo.server.dto.LoginDto;
 import com.wigo.server.dto.UserDto;
@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestOperations;
 
 @RestController
-@RequestMapping(WigoEndpionts.API_URL)
+@RequestMapping(WigoEndpoints.API_URL)
 public class LoginController {
     private static final String FB_ME_URL = "https://graph.facebook.com/v2.7/me?access_token={0}&" +
             "fields=id,name,first_name,middle_name,last_name,email,link&format=json&sdk=android";
@@ -24,7 +24,7 @@ public class LoginController {
         this.jwtLogic = jwtLogic;
     }
 
-    @PostMapping(path = WigoEndpionts.LOGIN)
+    @PostMapping(path = WigoEndpoints.LOGIN)
     public LoginDto login(@RequestBody LoginData loginData) {
         // TODO: add remote logout support
         // TODO: add transaction support

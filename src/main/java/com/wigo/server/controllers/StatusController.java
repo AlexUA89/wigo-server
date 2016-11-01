@@ -1,7 +1,7 @@
 package com.wigo.server.controllers;
 
 
-import com.wigo.server.WigoEndpionts;
+import com.wigo.server.WigoEndpoints;
 import com.wigo.server.dao.MessageDao;
 import com.wigo.server.dao.StatusDao;
 import com.wigo.server.dao.StatusSearchParams;
@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping(WigoEndpionts.API_URL)
+@RequestMapping(WigoEndpoints.API_URL)
 public class StatusController {
     private final StatusDao statusDao;
     private final MessageDao messageDao;
@@ -30,18 +30,18 @@ public class StatusController {
         this.userDao = userDao;
     }
 
-    @GetMapping(path = WigoEndpionts.STATUS)
+    @GetMapping(path = WigoEndpoints.STATUS)
     public List<StatusDto> getStatuses(@ModelAttribute StatusSearchParams searchParams) {
         return statusDao.getStatuses(searchParams);
     }
 
-    @PostMapping(path = WigoEndpionts.STATUS)
+    @PostMapping(path = WigoEndpoints.STATUS)
     public UUID postStatus(@RequestBody StatusDto status, @RequestAttribute("userId") UUID userId) {
         status.setUserId(userId);
         return statusDao.createStatus(status);
     }
 
-    @PatchMapping(path = WigoEndpionts.PATCH_STATUS)
+    @PatchMapping(path = WigoEndpoints.PATCH_STATUS)
     public void patchStatus(@PathVariable("statusId") UUID statusId, @RequestBody StatusDto status,
                             @RequestAttribute("userId") UUID userId) {
         status.setId(statusId);
@@ -49,12 +49,12 @@ public class StatusController {
         statusDao.updateStatus(status);
     }
 
-    @GetMapping(path = WigoEndpionts.MESSAGES_OF_STATUS)
+    @GetMapping(path = WigoEndpoints.MESSAGES_OF_STATUS)
     public List<MessageDto> getMessages(@PathVariable("statusId") UUID statusId) {
         return messageDao.getMessages(statusId);
     }
 
-    @PostMapping(path = WigoEndpionts.MESSAGES_OF_STATUS)
+    @PostMapping(path = WigoEndpoints.MESSAGES_OF_STATUS)
     public UUID postMessage(@PathVariable("statusId") UUID statusId, @RequestBody MessageDto message,
                             @RequestAttribute("userId") UUID userId) {
         message.setUserId(userId);
@@ -62,12 +62,12 @@ public class StatusController {
         return messageDao.createMessage(statusId, message);
     }
 
-    @GetMapping(path = WigoEndpionts.USER)
+    @GetMapping(path = WigoEndpoints.USER)
     public UserDto getUser(@PathVariable("userId") UUID userId) {
         return userDao.getUser(userId);
     }
 
-    @GetMapping(path = {WigoEndpionts.HASHTAGS})
+    @GetMapping(path = {WigoEndpoints.HASHTAGS})
     public List<String> getHashtags(@RequestParam("prefix") String prefix, @RequestParam("limit") int limit) {
         return statusDao.getTopHashtags(prefix, limit);
     }
