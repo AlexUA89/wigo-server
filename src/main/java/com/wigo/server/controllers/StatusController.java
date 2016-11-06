@@ -35,6 +35,11 @@ public class StatusController {
         return statusDao.getStatuses(searchParams);
     }
 
+    @GetMapping(path = WigoEndpoints.GET_STATUS)
+    public StatusDto getStatus(@PathVariable("statusId") UUID statusId) {
+        return statusDao.getStatus(statusId);
+    }
+
     @PostMapping(path = WigoEndpoints.STATUS)
     public UUID postStatus(@RequestBody StatusDto status, @RequestAttribute("userId") UUID userId) {
         status.setUserId(userId);

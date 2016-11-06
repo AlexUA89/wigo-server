@@ -1,6 +1,7 @@
 package com.wigo.server.dao;
 
 import com.wigo.server.dto.StatusDto;
+import com.wigo.server.dto.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -30,6 +31,9 @@ public class StatusDao {
                     "where latitude between :startLatitude and :endLatitude and " +
                     "longitude between :startLongitude and :endLongitude and " +
                     "(start_date < :endDate or start_date is null) and (end_date > :startDate or end_date is null)";
+    private static final String GET_STATUS_SQL =
+            "select id, user_id, latitude, longitude, name, text, start_date, end_date, kind from statuses " +
+                    "where id = :id";
     private static final String UPDATE_STATUS_SQL =
             "update statuses set latitude = :latitude, longitude = :longitude, name = :name, text = :text, " +
                     "start_date = :startDate, end_date = :endDate, kind = :kind where id = :id and user_id = :userId";
@@ -72,6 +76,10 @@ public class StatusDao {
             throw new DataRetrievalFailureException("Status doesn't exist or belongs to another user");
         jdbcTemplate.update(DELETE_HASHTAGS_SQL, beanParameterSource(status));
         insertHashtags(status);
+    }
+
+    public StatusDto getStatus(UUID statusId) {
+        return jdbcTemplate.query(GET_STATUS_SQL, new MapSqlParameterSource("id", statusId), statusDtoMapper).stream().findFirst().orElse(null);
     }
 
     public List<StatusDto> getStatuses(StatusSearchParams searchParams) {
