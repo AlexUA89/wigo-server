@@ -2,6 +2,7 @@ package com.wigo.server.dao;
 
 import com.wigo.server.dto.StatusDto;
 import com.wigo.server.dto.UserDto;
+import com.wigo.server.errors.StatusNotFoundExeption;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -79,7 +80,11 @@ public class StatusDao {
     }
 
     public StatusDto getStatus(UUID statusId) {
-        return jdbcTemplate.query(GET_STATUS_SQL, new MapSqlParameterSource("id", statusId), statusDtoMapper).stream().findFirst().orElse(null);
+        List<StatusDto> result = jdbcTemplate.query(GET_STATUS_SQL, new MapSqlParameterSource("id", statusId), statusDtoMapper);
+        if (!result.isEmpty()) {
+            return result.get(0);
+        }
+        throw new StatusNotFoundExeption();
     }
 
     public List<StatusDto> getStatuses(StatusSearchParams searchParams) {

@@ -9,6 +9,7 @@ import com.wigo.server.dao.UserDao;
 import com.wigo.server.dto.MessageDto;
 import com.wigo.server.dto.StatusDto;
 import com.wigo.server.dto.UserDto;
+import com.wigo.server.errors.StatusNotFoundExeption;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
