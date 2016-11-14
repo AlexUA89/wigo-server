@@ -18,6 +18,8 @@ CREATE TABLE statuses (
     kind        varchar NOT NULL check (kind in ('event', 'chat'))
 );
 
+CREATE INDEX statuses_search ON statuses USING gin(to_tsvector('english', name || '\n'|| text));
+
 CREATE TABLE status_hashtags (
     status_id   UUID NOT NULL REFERENCES statuses,
     hashtag     varchar not null

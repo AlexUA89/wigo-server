@@ -17,6 +17,7 @@ public class StatusSearchParams {
     private Instant startDate = MIN_INSTANT;
     private Instant endDate = MAX_INSTANT;
     private Set<String> hashtags;
+    private String search;
 
     public double getStartLatitude() {
         return startLatitude;
@@ -72,5 +73,13 @@ public class StatusSearchParams {
 
     public void setHashtags(Set<String> hashtags) {
         this.hashtags = hashtags;
+    }
+
+    public String getSearch() {
+        return search;
+    }
+
+    public void setSearch(String search) {
+        this.search = search;
     }
 }

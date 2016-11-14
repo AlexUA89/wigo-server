@@ -31,7 +31,8 @@ public class StatusDao {
             "select id, user_id, latitude, longitude, name, text, url, start_date, end_date, kind from statuses " +
                     "where latitude between :startLatitude and :endLatitude and " +
                     "longitude between :startLongitude and :endLongitude and " +
-                    "(start_date < :endDate or start_date is null) and (end_date > :startDate or end_date is null)";
+                    "(start_date < :endDate or start_date is null) and (end_date > :startDate or end_date is null) " +
+                    "and (to_tsvector('english', name || '\\n'|| text) @@ plainto_tsquery(:search) or :search is null)";
     private static final String GET_STATUS_SQL =
             "select id, user_id, latitude, longitude, name, text, url, start_date, end_date, kind from statuses " +
                     "where id = :id";
