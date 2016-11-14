@@ -1,5 +1,6 @@
 package com.wigo.server.dto;
 
+import java.net.URL;
 import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
@@ -19,6 +20,8 @@ public class StatusDto {
 
     private String text;
 
+    private URL url;
+
     private Instant startDate;
 
     private Instant endDate;
@@ -31,13 +34,14 @@ public class StatusDto {
 
     }
 
-    public StatusDto(UUID id, UUID userId, double latitude, double longitude, String name, String text, Instant startDate, Instant endDate, StatusKind kind, Set<String> hashtags) {
+    public StatusDto(UUID id, UUID userId, double latitude, double longitude, String name, String text, URL url, Instant startDate, Instant endDate, StatusKind kind, Set<String> hashtags) {
         this.id = id;
         this.userId = userId;
         this.latitude = latitude;
         this.longitude = longitude;
         this.name = name;
         this.text = text;
+        this.url = url;
         this.startDate = startDate;
         this.endDate = endDate;
         this.kind = kind;
@@ -124,4 +128,11 @@ public class StatusDto {
         this.hashtags = hashtags;
     }
 
+    public URL getUrl() {
+        return url;
+    }
+
+    public void setUrl(URL url) {
+        this.url = url;
+    }
 }

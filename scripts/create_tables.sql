@@ -12,6 +12,7 @@ CREATE TABLE statuses (
     longitude   decimal(9, 6) NOT NULL,
     name        varchar NOT NULL,
     text        varchar NOT NULL,
+    url         varchar,
     start_date  timestamp,
     end_date    timestamp,
     kind        varchar NOT NULL check (kind in ('event', 'chat'))

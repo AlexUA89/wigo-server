@@ -28,15 +28,15 @@ import static org.springframework.transaction.annotation.Isolation.READ_COMMITTE
 @Transactional(isolation = READ_COMMITTED)
 public class StatusDao {
     private static final String GET_STATUSES_SQL =
-            "select id, user_id, latitude, longitude, name, text, start_date, end_date, kind from statuses " +
+            "select id, user_id, latitude, longitude, name, text, url, start_date, end_date, kind from statuses " +
                     "where latitude between :startLatitude and :endLatitude and " +
                     "longitude between :startLongitude and :endLongitude and " +
                     "(start_date < :endDate or start_date is null) and (end_date > :startDate or end_date is null)";
     private static final String GET_STATUS_SQL =
-            "select id, user_id, latitude, longitude, name, text, start_date, end_date, kind from statuses " +
+            "select id, user_id, latitude, longitude, name, text, url, start_date, end_date, kind from statuses " +
                     "where id = :id";
     private static final String UPDATE_STATUS_SQL =
-            "update statuses set latitude = :latitude, longitude = :longitude, name = :name, text = :text, " +
+            "update statuses set latitude = :latitude, longitude = :longitude, name = :name, text = :text, url = :url" +
                     "start_date = :startDate, end_date = :endDate, kind = :kind where id = :id and user_id = :userId";
     private static final String DELETE_HASHTAGS_SQL = "delete from status_hashtags where status_id = :id";
     private static final String GET_HASHTAGS_SQL =
@@ -53,7 +53,8 @@ public class StatusDao {
     public StatusDao(DataSource dataSource) {
         this.jdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
         insertStatus = new SimpleJdbcInsert(dataSource).withTableName("statuses")
-                .usingColumns("id", "user_id", "latitude", "longitude", "name", "text", "start_date", "end_date", "kind");
+                .usingColumns("id", "user_id", "latitude", "longitude", "name", "text", "url", "start_date", "end_date",
+                        "kind");
         insertHashtags = new SimpleJdbcInsert(dataSource).withTableName("status_hashtags")
                 .usingColumns("status_id", "hashtag");
     }
