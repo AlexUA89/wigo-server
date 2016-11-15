@@ -37,7 +37,7 @@ public class StatusDao {
             "select id, user_id, latitude, longitude, name, text, url, start_date, end_date, kind from statuses " +
                     "where id = :id";
     private static final String UPDATE_STATUS_SQL =
-            "update statuses set latitude = :latitude, longitude = :longitude, name = :name, text = :text, url = :url" +
+            "update statuses set latitude = :latitude, longitude = :longitude, name = :name, text = :text, url = :url " +
                     "start_date = :startDate, end_date = :endDate, kind = :kind where id = :id and user_id = :userId";
     private static final String DELETE_HASHTAGS_SQL = "delete from status_hashtags where status_id = :id";
     private static final String GET_HASHTAGS_SQL =
