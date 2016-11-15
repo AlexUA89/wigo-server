@@ -3,6 +3,7 @@ package com.wigo.server.dao;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 
+import java.net.URL;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.regex.Pattern;
@@ -17,7 +18,8 @@ public class DaoUtils {
             public Object getValue(String paramName) throws IllegalArgumentException {
                 Object v = super.getValue(paramName);
                 return v instanceof Instant ? Timestamp.from((Instant) v) :
-                        v instanceof Enum ? v.toString() : v;
+                        v instanceof Enum ? v.toString() :
+                        v instanceof URL ? v.toString() : v;
             }
         };
     }
