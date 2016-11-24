@@ -1,2 +1,2 @@
 apt-get update
-apt-get install -y openjdk-8-jdk postgresql git maven
+apt-get install -y openjdk-8-jdk postgresql git maven unzip
