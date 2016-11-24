@@ -1,3 +1,5 @@
+alter user postgres password '1';
+
 CREATE TABLE users (
     id          UUID PRIMARY KEY,
     nickname    varchar NOT NULL,
