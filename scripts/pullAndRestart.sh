@@ -1,5 +1,5 @@
 TOMCAT_DIR="/home/ubuntu/apache-tomcat-9.0.0.M13"
-WIGO_DIR="/home/ubuntu/wigo-server/"
+WIGO_DIR="/home/ubuntu/wigo-server"
 
 sh "$TOMCAT_DIR/bin/shutdown.sh"
 cd "$WIGO_DIR"
