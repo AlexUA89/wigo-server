@@ -34,3 +34,6 @@ CREATE TABLE messages (
     text        varchar NOT NULL,
     created     timestamp NOT NULL
 );
+
+insert into users(id, nickname, name, email) values
+('f908854b-93f5-48bc-9213-7abcb1169d48', 'admin', 'admin', 'admin@wigo.com');
