@@ -17,7 +17,8 @@ CREATE TABLE statuses (
     url         varchar,
     start_date  timestamp,
     end_date    timestamp,
-    kind        varchar NOT NULL check (kind in ('event', 'chat'))
+    kind        varchar NOT NULL check (kind in ('event', 'chat')),
+    category    varchar NOT NULL
 );
 
 CREATE INDEX statuses_search ON statuses USING gin(to_tsvector('english', name || '\n'|| text));

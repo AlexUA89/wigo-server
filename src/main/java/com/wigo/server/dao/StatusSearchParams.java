@@ -1,6 +1,8 @@
 package com.wigo.server.dao;
 
 import java.time.Instant;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.Set;
 
 import static com.wigo.server.dao.DaoUtils.MAX_INSTANT;
@@ -18,6 +20,7 @@ public class StatusSearchParams {
     private Instant endDate = MAX_INSTANT;
     private Set<String> hashtags;
     private String search;
+    private Set<String> categories = new HashSet<>();
 
     public double getStartLatitude() {
         return startLatitude;
@@ -81,5 +84,17 @@ public class StatusSearchParams {
 
     public void setSearch(String search) {
         this.search = search;
+    }
+
+    public Set<String> getCategories() {
+        return categories.isEmpty() ? Collections.singleton("") : categories;
+    }
+
+    public void setCategories(Set<String> categories) {
+        this.categories = categories;
+    }
+
+    public boolean getNoCategories() {
+        return categories.isEmpty();
     }
 }

@@ -30,11 +30,13 @@ public class StatusDto {
 
     private Set<String> hashtags = new HashSet<>();
 
+    private String category;
+
     public StatusDto(){
 
     }
 
-    public StatusDto(UUID id, UUID userId, double latitude, double longitude, String name, String text, URL url, Instant startDate, Instant endDate, StatusKind kind, Set<String> hashtags) {
+    public StatusDto(UUID id, UUID userId, double latitude, double longitude, String name, String text, URL url, Instant startDate, Instant endDate, StatusKind kind, Set<String> hashtags, String category) {
         this.id = id;
         this.userId = userId;
         this.latitude = latitude;
@@ -46,6 +48,7 @@ public class StatusDto {
         this.endDate = endDate;
         this.kind = kind;
         this.hashtags = hashtags;
+        this.category = category;
     }
 
     public UUID getId() {
@@ -134,5 +137,13 @@ public class StatusDto {
 
     public void setUrl(URL url) {
         this.url = url;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 }
