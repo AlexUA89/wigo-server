@@ -1,5 +1,6 @@
 package com.wigo.server.dao;
 
+import java.net.URL;
 import java.time.Instant;
 import java.util.Collections;
 import java.util.HashSet;
@@ -21,6 +22,7 @@ public class StatusSearchParams {
     private Set<String> hashtags;
     private String search;
     private Set<String> categories = new HashSet<>();
+    private URL url;
 
     public double getStartLatitude() {
         return startLatitude;
@@ -96,5 +98,13 @@ public class StatusSearchParams {
 
     public boolean getNoCategories() {
         return categories.isEmpty();
+    }
+
+    public URL getUrl() {
+        return url;
+    }
+
+    public void setUrl(URL url) {
+        this.url = url;
     }
 }
