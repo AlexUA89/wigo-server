@@ -28,7 +28,7 @@ create table images (
 
 create table status_images (
     status_id   UUID not null REFERENCES statuses,
-    url         varchar not null REFERENCES images
+    url         varchar not null
 );
 
 CREATE INDEX statuses_search ON statuses USING gin(to_tsvector('english', name || '\n'|| text));
