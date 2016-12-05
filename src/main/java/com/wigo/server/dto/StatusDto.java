@@ -2,9 +2,7 @@ package com.wigo.server.dto;
 
 import java.net.URL;
 import java.time.Instant;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 public class StatusDto {
 
@@ -32,11 +30,13 @@ public class StatusDto {
 
     private String category;
 
+    private List<URL> images = new ArrayList<>();
+
     public StatusDto(){
 
     }
 
-    public StatusDto(UUID id, UUID userId, double latitude, double longitude, String name, String text, URL url, Instant startDate, Instant endDate, StatusKind kind, Set<String> hashtags, String category) {
+    public StatusDto(UUID id, UUID userId, double latitude, double longitude, String name, String text, URL url, Instant startDate, Instant endDate, StatusKind kind, Set<String> hashtags, String category, List<URL> images) {
         this.id = id;
         this.userId = userId;
         this.latitude = latitude;
@@ -49,6 +49,7 @@ public class StatusDto {
         this.kind = kind;
         this.hashtags = hashtags;
         this.category = category;
+        this.images = images;
     }
 
     public UUID getId() {
@@ -145,5 +146,13 @@ public class StatusDto {
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    public List<URL> getImages() {
+        return images;
+    }
+
+    public void setImages(List<URL> images) {
+        this.images = images;
     }
 }

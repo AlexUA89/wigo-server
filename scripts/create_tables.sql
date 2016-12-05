@@ -21,6 +21,16 @@ CREATE TABLE statuses (
     category    varchar NOT NULL
 );
 
+create table images (
+    url         varchar PRIMARY KEY,
+    user_id     UUID not null REFERENCES users
+);
+
+create table status_images (
+    status_id   UUID not null REFERENCES statuses,
+    url         varchar not null REFERENCES images
+);
+
 CREATE INDEX statuses_search ON statuses USING gin(to_tsvector('english', name || '\n'|| text));
 
 CREATE TABLE status_hashtags (

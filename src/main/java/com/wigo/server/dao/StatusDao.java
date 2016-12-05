@@ -15,6 +15,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.sql.DataSource;
+import java.net.URL;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -47,10 +48,14 @@ public class StatusDao {
     private static final String GET_TOP_HASHTAGS_SQL =
             "select hashtag from status_hashtags where hashtag like :prefix || '%' " +
                     "group by hashtag order by count(*) desc limit :limit";
+    private static final String GET_IMAGES_SQL =
+            "select status_id, url from status_images where status_id in (:ids)";
+    private static final String DELETE_IMAGES_SQL = "delete from status_images where status_id = :id";
 
     private final NamedParameterJdbcTemplate jdbcTemplate;
     private final SimpleJdbcInsert insertStatus;
     private final SimpleJdbcInsert insertHashtags;
+    private final SimpleJdbcInsert insertImages;
 
     @Autowired
     public StatusDao(DataSource dataSource) {
@@ -60,18 +65,23 @@ public class StatusDao {
                         "kind", "category");
         insertHashtags = new SimpleJdbcInsert(dataSource).withTableName("status_hashtags")
                 .usingColumns("status_id", "hashtag");
+        insertImages = new SimpleJdbcInsert(dataSource).withTableName("status_images")
+                .usingColumns("status_id", "url");
     }
 
     public UUID createStatus(StatusDto status) {
         status.setId(UUID.randomUUID());
         insertStatus.execute(beanParameterSource(status));
-        insertHashtags(status);
+        insertHashtagsImages(status);
         return status.getId();
     }
 
-    private void insertHashtags(StatusDto status) {
+    private void insertHashtagsImages(StatusDto status) {
         insertHashtags.executeBatch(status.getHashtags().stream()
                 .map(h -> beanParameterSource(new StatusHashtag(status.getId(), h)))
+                .toArray(SqlParameterSource[]::new));
+        insertImages.executeBatch(status.getImages().stream()
+                .map(h -> beanParameterSource(new StatusImage(status.getId(), h)))
                 .toArray(SqlParameterSource[]::new));
     }
 
@@ -80,7 +90,8 @@ public class StatusDao {
         if (jdbcTemplate.update(UPDATE_STATUS_SQL, beanParameterSource(status)) == 0)
             throw new DataRetrievalFailureException("Status doesn't exist or belongs to another user");
         jdbcTemplate.update(DELETE_HASHTAGS_SQL, beanParameterSource(status));
-        insertHashtags(status);
+        jdbcTemplate.update(DELETE_IMAGES_SQL, beanParameterSource(status));
+        insertHashtagsImages(status);
     }
 
     public StatusDto getStatus(UUID statusId) {
@@ -94,11 +105,18 @@ public class StatusDao {
     public List<StatusDto> getStatuses(StatusSearchParams searchParams) {
         List<StatusDto> res = jdbcTemplate.query(GET_STATUSES_SQL, beanParameterSource(searchParams), statusDtoMapper);
         if (!res.isEmpty()) {
+            MapSqlParameterSource params = new MapSqlParameterSource("ids",
+                    res.stream().map(StatusDto::getId).collect(Collectors.toSet()));
             Map<UUID, Set<String>> hashtags = jdbcTemplate.query(GET_HASHTAGS_SQL,
-                    new MapSqlParameterSource("ids", res.stream().map(StatusDto::getId).collect(Collectors.toSet())),
-                    statusHashtagMapper).stream().collect(
+                    params, statusHashtagMapper).stream().collect(
                     groupingBy(StatusHashtag::getStatusId, mapping(StatusHashtag::getHashtag, toSet())));
-            res.stream().forEach(s -> s.setHashtags(hashtags.getOrDefault(s.getId(), s.getHashtags())));
+            Map<UUID, List<URL>> images = jdbcTemplate.query(GET_IMAGES_SQL,
+                    params, statusImageMapper).stream().collect(
+                    groupingBy(StatusImage::getStatusId, mapping(StatusImage::getUrl, toList())));
+            res.stream().forEach(s -> {
+                s.setHashtags(hashtags.getOrDefault(s.getId(), s.getHashtags()));
+                s.setImages(images.getOrDefault(s.getId(), s.getImages()));
+            });
         }
         if (searchParams.getHashtags() != null)
             res.removeIf(s -> disjoint(s.getHashtags(), searchParams.getHashtags()));
@@ -114,6 +132,8 @@ public class StatusDao {
     private final RowMapper<StatusDto> statusDtoMapper = new BeanPropertyRowMapper<>(StatusDto.class);
 
     private final RowMapper<StatusHashtag> statusHashtagMapper = new BeanPropertyRowMapper<>(StatusHashtag.class);
+
+    private final RowMapper<StatusImage> statusImageMapper = new BeanPropertyRowMapper<>(StatusImage.class);
 
     private static class StatusHashtag {
         private UUID statusId;
@@ -142,6 +162,36 @@ public class StatusDao {
 
         public void setHashtag(String hashtag) {
             this.hashtag = hashtag;
+        }
+    }
+
+    private static class StatusImage {
+        private UUID statusId;
+
+        private URL url;
+
+        public StatusImage() {
+        }
+
+        public StatusImage(UUID statusId, URL url) {
+            this.statusId = statusId;
+            this.url = url;
+        }
+
+        public UUID getStatusId() {
+            return statusId;
+        }
+
+        public void setStatusId(UUID statusId) {
+            this.statusId = statusId;
+        }
+
+        public URL getUrl() {
+            return url;
+        }
+
+        public void setUrl(URL url) {
+            this.url = url;
         }
     }
 }
