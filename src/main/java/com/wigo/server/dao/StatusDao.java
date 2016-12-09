@@ -1,7 +1,6 @@
 package com.wigo.server.dao;
 
 import com.wigo.server.dto.StatusDto;
-import com.wigo.server.dto.UserDto;
 import com.wigo.server.errors.StatusNotFoundExeption;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataRetrievalFailureException;
@@ -96,6 +95,7 @@ public class StatusDao {
 
     public StatusDto getStatus(UUID statusId) {
         List<StatusDto> result = jdbcTemplate.query(GET_STATUS_SQL, new MapSqlParameterSource("id", statusId), statusDtoMapper);
+        queryStatusHashtagsImages(result);
         if (!result.isEmpty()) {
             return result.get(0);
         }
@@ -104,6 +104,13 @@ public class StatusDao {
 
     public List<StatusDto> getStatuses(StatusSearchParams searchParams) {
         List<StatusDto> res = jdbcTemplate.query(GET_STATUSES_SQL, beanParameterSource(searchParams), statusDtoMapper);
+        queryStatusHashtagsImages(res);
+        if (searchParams.getHashtags() != null)
+            res.removeIf(s -> disjoint(s.getHashtags(), searchParams.getHashtags()));
+        return res;
+    }
+
+    private void queryStatusHashtagsImages(List<StatusDto> res) {
         if (!res.isEmpty()) {
             MapSqlParameterSource params = new MapSqlParameterSource("ids",
                     res.stream().map(StatusDto::getId).collect(Collectors.toSet()));
@@ -118,9 +125,6 @@ public class StatusDao {
                 s.setImages(images.getOrDefault(s.getId(), s.getImages()));
             });
         }
-        if (searchParams.getHashtags() != null)
-            res.removeIf(s -> disjoint(s.getHashtags(), searchParams.getHashtags()));
-        return res;
     }
 
     public List<String> getTopHashtags(String prefix, int limit) {
