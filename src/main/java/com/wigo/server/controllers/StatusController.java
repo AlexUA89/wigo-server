@@ -61,11 +61,11 @@ public class StatusController {
     }
 
     @PostMapping(path = WigoEndpoints.MESSAGES_OF_STATUS)
-    public UUID postMessage(@PathVariable("statusId") UUID statusId, @RequestBody MessageDto message,
+    public MessageDto postMessage(@PathVariable("statusId") UUID statusId, @RequestBody MessageDto message,
                             @RequestAttribute("userId") UUID userId) {
         message.setUserId(userId);
         message.setCreated(Instant.now());
-        return messageDao.createMessage(statusId, message);
+        return messageDao.getMessage(messageDao.createMessage(statusId, message)).get();
     }
 
     @GetMapping(path = WigoEndpoints.USER)
