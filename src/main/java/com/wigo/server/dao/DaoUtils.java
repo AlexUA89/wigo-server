@@ -9,19 +9,23 @@ import java.time.Instant;
 import java.util.regex.Pattern;
 
 public class DaoUtils {
-    public static Instant MIN_INSTANT = Instant.parse("1900-01-01T00:00:00Z");
-    public static Instant MAX_INSTANT = Instant.parse("2100-01-01T00:00:00Z");
+    public static final String MIN_INSTANT_STR = "1900-01-01T00:00:00Z";
+    public static final Instant MIN_INSTANT = Instant.parse(MIN_INSTANT_STR);
+    public static final Instant MAX_INSTANT = Instant.parse("2100-01-01T00:00:00Z");
 
     public static BeanPropertySqlParameterSource beanParameterSource(Object o) {
         return new BeanPropertySqlParameterSource(o) {
             @Override
             public Object getValue(String paramName) throws IllegalArgumentException {
-                Object v = super.getValue(paramName);
-                return v instanceof Instant ? Timestamp.from((Instant) v) :
-                        v instanceof Enum ? v.toString() :
-                        v instanceof URL ? v.toString() : v;
+                return toSqlType(super.getValue(paramName));
             }
         };
+    }
+
+    public static Object toSqlType(Object v) {
+        return v instanceof Instant ? Timestamp.from((Instant) v) :
+                v instanceof Enum ? v.toString() :
+                v instanceof URL ? v.toString() : v;
     }
 
     public static SqlParameterSource joinParameterSources(SqlParameterSource... a) {

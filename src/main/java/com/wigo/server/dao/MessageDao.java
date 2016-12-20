@@ -11,12 +11,14 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.sql.DataSource;
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 import static com.wigo.server.dao.DaoUtils.beanParameterSource;
 import static com.wigo.server.dao.DaoUtils.joinParameterSources;
+import static com.wigo.server.dao.DaoUtils.toSqlType;
 import static org.springframework.transaction.annotation.Isolation.READ_COMMITTED;
 
 @Repository
@@ -24,7 +26,7 @@ import static org.springframework.transaction.annotation.Isolation.READ_COMMITTE
 public class MessageDao {
     private static final String GET_MESSAGES =
             "select messages.id, user_id, nickname, text, created from messages join users on user_id=users.id where ";
-    private static final String GET_MESSAGES_SQL = GET_MESSAGES + "status_id = :id";
+    private static final String GET_MESSAGES_SQL = GET_MESSAGES + "status_id = :id and created >= :from";
     private static final String GET_MESSAGE_SQL = GET_MESSAGES + "messages.id = :id";
 
     private final RowMapper<MessageDto> messageDtoMapper = new BeanPropertyRowMapper<>(MessageDto.class);
@@ -38,8 +40,9 @@ public class MessageDao {
                 .usingColumns("id", "user_id", "text", "created", "status_id");
     }
 
-    public List<MessageDto> getMessages(UUID statusId) {
-        return jdbcTemplate.query(GET_MESSAGES_SQL, new MapSqlParameterSource("id", statusId), messageDtoMapper);
+    public List<MessageDto> getMessages(UUID statusId, Instant from) {
+        return jdbcTemplate.query(GET_MESSAGES_SQL, new MapSqlParameterSource("id", statusId)
+                        .addValue("from", toSqlType(from)), messageDtoMapper);
     }
 
     public Optional<MessageDto> getMessage(UUID messageId) {

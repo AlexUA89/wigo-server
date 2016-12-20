@@ -2,10 +2,7 @@ package com.wigo.server.controllers;
 
 
 import com.wigo.server.WigoEndpoints;
-import com.wigo.server.dao.MessageDao;
-import com.wigo.server.dao.StatusDao;
-import com.wigo.server.dao.StatusSearchParams;
-import com.wigo.server.dao.UserDao;
+import com.wigo.server.dao.*;
 import com.wigo.server.dto.MessageDto;
 import com.wigo.server.dto.StatusDto;
 import com.wigo.server.dto.UserDto;
@@ -16,6 +13,9 @@ import org.springframework.web.bind.annotation.*;
 import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
+
+import static com.wigo.server.dao.DaoUtils.MIN_INSTANT;
+import static com.wigo.server.dao.DaoUtils.MIN_INSTANT_STR;
 
 @RestController
 @RequestMapping(WigoEndpoints.API_URL)
@@ -56,8 +56,9 @@ public class StatusController {
     }
 
     @GetMapping(path = WigoEndpoints.MESSAGES_OF_STATUS)
-    public List<MessageDto> getMessages(@PathVariable("statusId") UUID statusId) {
-        return messageDao.getMessages(statusId);
+    public List<MessageDto> getMessages(@PathVariable("statusId") UUID statusId,
+                                        @RequestParam(value = "from", defaultValue = MIN_INSTANT_STR) Instant from) {
+        return messageDao.getMessages(statusId, from);
     }
 
     @PostMapping(path = WigoEndpoints.MESSAGES_OF_STATUS)
