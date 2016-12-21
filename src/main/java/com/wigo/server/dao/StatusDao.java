@@ -1,5 +1,6 @@
 package com.wigo.server.dao;
 
+import com.wigo.server.dto.BriefStatusDto;
 import com.wigo.server.dto.StatusDto;
 import com.wigo.server.errors.StatusNotFoundExeption;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +29,7 @@ import static org.springframework.transaction.annotation.Isolation.READ_COMMITTE
 @Transactional(isolation = READ_COMMITTED)
 public class StatusDao {
     private static final String GET_STATUSES_SQL =
-            "select id, user_id, latitude, longitude, name, text, url, start_date, end_date, kind, category from statuses " +
+            "select id, latitude, longitude, name, category from statuses " +
                     "where latitude between :startLatitude and :endLatitude and " +
                     "longitude between :startLongitude and :endLongitude and " +
                     "(start_date < :endDate or start_date is null) and (end_date > :startDate or end_date is null) " +
@@ -102,12 +103,8 @@ public class StatusDao {
         throw new StatusNotFoundExeption();
     }
 
-    public List<StatusDto> getStatuses(StatusSearchParams searchParams) {
-        List<StatusDto> res = jdbcTemplate.query(GET_STATUSES_SQL, beanParameterSource(searchParams), statusDtoMapper);
-        queryStatusHashtagsImages(res);
-        if (searchParams.getHashtags() != null)
-            res.removeIf(s -> disjoint(s.getHashtags(), searchParams.getHashtags()));
-        return res;
+    public List<BriefStatusDto> getStatuses(StatusSearchParams searchParams) {
+        return jdbcTemplate.query(GET_STATUSES_SQL, beanParameterSource(searchParams), briefStatusDtoMapper);
     }
 
     private void queryStatusHashtagsImages(List<StatusDto> res) {
@@ -134,6 +131,8 @@ public class StatusDao {
     }
 
     private final RowMapper<StatusDto> statusDtoMapper = new BeanPropertyRowMapper<>(StatusDto.class);
+
+    private final RowMapper<BriefStatusDto> briefStatusDtoMapper = new BeanPropertyRowMapper<>(BriefStatusDto.class);
 
     private final RowMapper<StatusHashtag> statusHashtagMapper = new BeanPropertyRowMapper<>(StatusHashtag.class);
 

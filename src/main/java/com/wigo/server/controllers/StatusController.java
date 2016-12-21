@@ -3,6 +3,7 @@ package com.wigo.server.controllers;
 
 import com.wigo.server.WigoEndpoints;
 import com.wigo.server.dao.*;
+import com.wigo.server.dto.BriefStatusDto;
 import com.wigo.server.dto.MessageDto;
 import com.wigo.server.dto.StatusDto;
 import com.wigo.server.dto.UserDto;
@@ -32,7 +33,7 @@ public class StatusController {
     }
 
     @GetMapping(path = WigoEndpoints.STATUS)
-    public List<StatusDto> getStatuses(@ModelAttribute StatusSearchParams searchParams) {
+    public List<BriefStatusDto> getStatuses(@ModelAttribute StatusSearchParams searchParams) {
         return statusDao.getStatuses(searchParams);
     }
 

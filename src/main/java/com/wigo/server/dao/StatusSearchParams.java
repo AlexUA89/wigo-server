@@ -19,7 +19,6 @@ public class StatusSearchParams {
     private double endLongitude = 1e4;
     private Instant startDate = MIN_INSTANT;
     private Instant endDate = MAX_INSTANT;
-    private Set<String> hashtags;
     private String search;
     private Set<String> categories = new HashSet<>();
     private URL url;
@@ -70,14 +69,6 @@ public class StatusSearchParams {
 
     public void setEndDate(Instant endDate) {
         this.endDate = endDate;
-    }
-
-    public Set<String> getHashtags() {
-        return hashtags;
-    }
-
-    public void setHashtags(Set<String> hashtags) {
-        this.hashtags = hashtags;
     }
 
     public String getSearch() {
