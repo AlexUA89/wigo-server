@@ -16,6 +16,8 @@ public class BriefStatusDto {
 
     private String category;
 
+    private String kind;
+
     public BriefStatusDto(){
 
     }
@@ -68,4 +70,11 @@ public class BriefStatusDto {
         this.category = category;
     }
 
+    public String getKind() {
+        return kind;
+    }
+
+    public void setKind(String kind) {
+        this.kind = kind;
+    }
 }
