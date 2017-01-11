@@ -23,13 +23,11 @@ import static com.wigo.server.dao.DaoUtils.MIN_INSTANT_STR;
 public class StatusController {
     private final StatusDao statusDao;
     private final MessageDao messageDao;
-    private final UserDao userDao;
 
     @Autowired
-    public StatusController(StatusDao statusDao, MessageDao messageDao, UserDao userDao) {
+    public StatusController(StatusDao statusDao, MessageDao messageDao) {
         this.statusDao = statusDao;
         this.messageDao = messageDao;
-        this.userDao = userDao;
     }
 
     @GetMapping(path = WigoEndpoints.STATUS)
@@ -68,11 +66,6 @@ public class StatusController {
         message.setUserId(userId);
         message.setCreated(Instant.now());
         return messageDao.getMessage(messageDao.createMessage(statusId, message)).get();
-    }
-
-    @GetMapping(path = WigoEndpoints.USER)
-    public UserDto getUser(@PathVariable("userId") UUID userId) {
-        return userDao.getUser(userId);
     }
 
     @GetMapping(path = {WigoEndpoints.HASHTAGS})

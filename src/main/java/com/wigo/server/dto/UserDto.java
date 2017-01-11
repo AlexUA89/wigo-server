@@ -10,14 +10,20 @@ public class UserDto {
 
     private String name;
 
+    private String email;
+
+    private String fbId;
+
     public UserDto(){
 
     }
 
-    public UserDto(UUID id, String nickname, String name) {
+    public UserDto(UUID id, String nickname, String name, String email, String fbId) {
         this.id = id;
         this.nickname = nickname;
         this.name = name;
+        this.email = email;
+        this.fbId = fbId;
     }
 
     public UUID getId() {
@@ -42,5 +48,21 @@ public class UserDto {
 
     public void setNickname(String nickname) {
         this.nickname = nickname;
+    }
+
+    public String getFbId() {
+        return fbId;
+    }
+
+    public void setFbId(String fbId) {
+        this.fbId = fbId;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

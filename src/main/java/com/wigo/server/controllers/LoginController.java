@@ -32,13 +32,13 @@ public class LoginController {
     public LoginDto login(@RequestBody LoginData loginData) {
         // TODO: add remote logout support
         FbData fbData = restOperations.getForObject(FB_ME_URL, FbData.class, loginData.getFbToken());
-        UserDto user = new UserDto(null, fbData.name, fbData.name);
-        UserDto oldUser = userDao.getUserByEmail(fbData.email);
+        UserDto user = new UserDto(null, fbData.name, fbData.name, fbData.email, fbData.id);
+        UserDto oldUser = userDao.getUserByFbId(fbData.id);
         if (oldUser == null)
-            userDao.createUser(fbData.email, user);
+            userDao.createUser(user);
         else {
             user.setId(oldUser.getId());
-            userDao.updateUserByEmail(fbData.email, user);
+            userDao.updateUserByFbId(user);
         }
         return new LoginDto(user, jwtLogic.getJwtToken(user.getId()));
     }
@@ -67,6 +67,7 @@ public class LoginController {
     }
      */
     public static class FbData {
+        private String id;
         private String name;
         private String email;
 
@@ -84,6 +85,14 @@ public class LoginController {
 
         public void setEmail(String email) {
             this.email = email;
+        }
+
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
         }
     }
 }

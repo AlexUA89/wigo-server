@@ -4,7 +4,8 @@ CREATE TABLE users (
     id          UUID PRIMARY KEY,
     nickname    varchar NOT NULL,
     name        varchar NOT NULL,
-    email       varchar UNIQUE NOT NULL
+    email       varchar,
+    fb_id       varchar UNIQUE NOT NULL
 );
 
 CREATE TABLE statuses (
@@ -17,7 +18,7 @@ CREATE TABLE statuses (
     url         varchar,
     start_date  timestamp,
     end_date    timestamp,
-    kind        varchar NOT NULL check (kind in ('event', 'chat')),
+    kind        varchar check (kind in ('event', 'chat')),
     category    varchar NOT NULL
 );
 
@@ -46,5 +47,5 @@ CREATE TABLE messages (
     created     timestamp NOT NULL
 );
 
-insert into users(id, nickname, name, email) values
-('f908854b-93f5-48bc-9213-7abcb1169d48', 'admin', 'admin', 'admin@wigo.com');
+insert into users(id, nickname, name, email, fb_id) values
+('f908854b-93f5-48bc-9213-7abcb1169d48', 'admin', 'admin', 'admin@wigo.com', 'f908854b-93f5-48bc-9213-7abcb1169d48');
