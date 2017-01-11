@@ -1,6 +1,7 @@
 package com.wigo.server.controllers;
 
 import com.wigo.server.WigoEndpoints;
+import io.jsonwebtoken.JwtException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -33,13 +34,16 @@ public class LoginFilter implements Filter {
         String path = hreq.getServletPath();
         if (MUTATING_METHODS.contains(meth) &&
                 !path.equals(WigoEndpoints.API_URL + WigoEndpoints.LOGIN) && !path.equals("/error")) {
-            String authHeader = hreq.getHeader("Authorization");
-            if (authHeader == null) {
+            try {
+                String authHeader = hreq.getHeader("Authorization");
+                if (authHeader == null)
+                    throw new JwtException("No authorization header");
+                UUID userId = jwtLogic.parseJwtToken(authHeader.split(" ")[1]);
+                req.setAttribute("userId", userId);
+            } catch (JwtException e) {
                 hres.setStatus(SC_UNAUTHORIZED);
                 return;
             }
-            UUID userId = jwtLogic.parseJwtToken(authHeader.split(" ")[1]);
-            req.setAttribute("userId", userId);
         }
         chain.doFilter(req, res);
     }

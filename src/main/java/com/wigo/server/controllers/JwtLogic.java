@@ -1,5 +1,6 @@
 package com.wigo.server.controllers;
 
+import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,8 +32,12 @@ public class JwtLogic {
     }
 
     public UUID parseJwtToken(String token) {
-        // can parser be a singleton?
-        return UUID.fromString(Jwts.parser().setSigningKey(jwtKey).parseClaimsJws(token).getBody().getSubject());
+        try {
+            // can parser be a singleton?
+            return UUID.fromString(Jwts.parser().setSigningKey(jwtKey).parseClaimsJws(token).getBody().getSubject());
+        } catch (IllegalArgumentException e) {
+            throw new JwtException(e.getMessage(), e);
+        }
     }
 
     public static void main(String[] args) throws IOException {
