@@ -3,6 +3,7 @@ package com.wigo.server.controllers;
 import com.wigo.server.WigoEndpoints;
 import com.wigo.server.dao.UserDao;
 import com.wigo.server.dto.LoginDto;
+import com.wigo.server.dto.User;
 import com.wigo.server.dto.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,15 +33,15 @@ public class LoginController {
     public LoginDto login(@RequestBody LoginData loginData) {
         // TODO: add remote logout support
         FbData fbData = restOperations.getForObject(FB_ME_URL, FbData.class, loginData.getFbToken());
-        UserDto user = new UserDto(null, fbData.name, fbData.name, fbData.email, fbData.id);
-        UserDto oldUser = userDao.getUserByFbId(fbData.id);
+        User user = new User(null, fbData.name, fbData.name, fbData.email, fbData.id);
+        User oldUser = userDao.getUserByFbId(fbData.id);
         if (oldUser == null)
             userDao.createUser(user);
         else {
             user.setId(oldUser.getId());
             userDao.updateUserByFbId(user);
         }
-        return new LoginDto(user, jwtLogic.getJwtToken(user.getId()));
+        return new LoginDto(new UserDto(user), jwtLogic.getJwtToken(user.getId()));
     }
 
     public static class LoginData {
