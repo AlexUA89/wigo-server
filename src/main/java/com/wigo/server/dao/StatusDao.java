@@ -29,7 +29,7 @@ import static org.springframework.transaction.annotation.Isolation.READ_COMMITTE
 @Transactional(isolation = READ_COMMITTED)
 public class StatusDao {
     private static final String GET_STATUSES_SQL =
-            "select id, latitude, longitude, name, category, kind from statuses " +
+            "select id, latitude, longitude, name, category, kind, start_date, end_date from statuses " +
                     "where latitude between :startLatitude and :endLatitude and " +
                     "longitude between :startLongitude and :endLongitude and " +
                     "(start_date < :endDate or start_date is null) and (end_date > :startDate or end_date is null) " +

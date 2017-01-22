@@ -18,16 +18,22 @@ public class BriefStatusDto {
 
     private String kind;
 
+    private Instant startDate;
+
+    private Instant endDate;
+
     public BriefStatusDto(){
 
     }
 
-    public BriefStatusDto(UUID id, double latitude, double longitude, String name, String category) {
+    public BriefStatusDto(UUID id, double latitude, double longitude, String name, String category, Instant startDate, Instant endDate) {
         this.id = id;
         this.latitude = latitude;
         this.longitude = longitude;
         this.name = name;
         this.category = category;
+        this.startDate = startDate;
+        this.endDate = endDate;
     }
 
     public UUID getId() {
@@ -76,5 +82,21 @@ public class BriefStatusDto {
 
     public void setKind(String kind) {
         this.kind = kind;
+    }
+
+    public Instant getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Instant startDate) {
+        this.startDate = startDate;
+    }
+
+    public Instant getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Instant endDate) {
+        this.endDate = endDate;
     }
 }
