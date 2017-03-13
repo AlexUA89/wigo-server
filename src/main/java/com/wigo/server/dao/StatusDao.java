@@ -2,6 +2,7 @@ package com.wigo.server.dao;
 
 import com.wigo.server.dto.BriefStatusDto;
 import com.wigo.server.dto.StatusDto;
+import com.wigo.server.errors.StatusAlreadyExist;
 import com.wigo.server.errors.StatusNotFoundExeption;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataRetrievalFailureException;
@@ -39,6 +40,9 @@ public class StatusDao {
     private static final String GET_STATUS_SQL =
             "select id, user_id, latitude, longitude, name, text, url, start_date, end_date, kind, category from statuses " +
                     "where id = :id";
+    private static final String GET_STATUS_BY_NAME_SQL =
+            "select id, user_id, latitude, longitude, name, text, url, start_date, end_date, kind, category from statuses " +
+                    "where name = :name";
     private static final String UPDATE_STATUS_SQL =
             "update statuses set latitude = :latitude, longitude = :longitude, name = :name, text = :text, url = :url, " +
                     "start_date = :startDate, end_date = :endDate, category = :category, kind = :kind where id = :id and user_id = :userId";
@@ -70,6 +74,10 @@ public class StatusDao {
     }
 
     public UUID createStatus(StatusDto status) {
+        List<StatusDto> result = jdbcTemplate.query(GET_STATUS_SQL, new MapSqlParameterSource("name", status.getName()), statusDtoMapper);
+        if(!result.isEmpty()) {
+           throw new StatusAlreadyExist(result.get(0).getId());
+        }
         status.setId(UUID.randomUUID());
         insertStatus.execute(beanParameterSource(status));
         insertHashtagsImages(status);
