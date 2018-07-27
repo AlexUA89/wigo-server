@@ -1,20 +1,10 @@
 set -eo pipefail
 
-TOMCAT_DIR="/home/ubuntu/apache-tomcat-9.0.0.M13"
-WIGO_DIR="/home/ubuntu/wigo-server"
+WIGO_DIR="/root/wigo-server"
 
-sh "$TOMCAT_DIR/bin/shutdown.sh"
+sudo pkill -f 'java -jar'
 cd "$WIGO_DIR"
-git pull https://2b6697f81aa09ea18fc28e8d5666fb8e7650e220@github.com/AlexUA89/wigo-server.git
+git pull https://9565d92cc7e245e3e476c481966694e87401035f@github.com/AlexUA89/wigo-server.git
+rm -rf "$TOMCAT_DIR/target"
 mvn clean package
-rm -rf "$TOMCAT_DIR/temp"
-rm -rf "$TOMCAT_DIR/work"
-rm -rf "$TOMCAT_DIR/webapps/ROOT"
-mkdir "$TOMCAT_DIR/webapps/ROOT"
-cp -a "$WIGO_DIR/target/wigo-server.war" "$TOMCAT_DIR/webapps/ROOT"
-cd "$TOMCAT_DIR/webapps/ROOT"
-unzip wigo-server.war
-rm wigo-server.war
-cp -r /home/ubuntu/wigo-static/* .
-sed -i 's|http://52.90.115.129:8080/wigo-server||g' static/js/app.b2d4054c2e74e02cf8fc.js*
-sh "$TOMCAT_DIR/bin/startup.sh"
+java -jar ./target/server-1.0-SNAPSHOT.jar > "$TOMCAT_DIR/log.txt" 2>&1 &
