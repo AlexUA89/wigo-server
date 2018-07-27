@@ -1,5 +1,3 @@
-set -eo pipefail
-
 WIGO_DIR="/root/wigo-server"
 
 sudo pkill -f 'java -jar'
