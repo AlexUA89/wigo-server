@@ -13,12 +13,11 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.4.0.RELEASE</version>
+        <version>2.0.3.RELEASE</version>
     </parent>
 
     <properties>
-        <tomcat.version>9.0.0.M9</tomcat.version>
-        <java.version>1.8</java.version>
+        <java.version>1.10</java.version>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <swagger2.version>2.5.0</swagger2.version>
@@ -33,8 +32,7 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-tomcat</artifactId>
-            <scope>provided</scope>
+            <artifactId>spring-boot-starter</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -81,16 +79,12 @@
     </dependencies>
 
     <build>
-        <finalName>wigo-server</finalName>
         <plugins>
             <plugin>
-                <groupId>org.apache.tomcat.maven</groupId>
-                <artifactId>tomcat7-maven-plugin</artifactId>
-                <version>2.2</version>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <url>http://192.168.1.7:8080/manager</url>
-                    <server>mytomcat</server>
-                    <path>/</path>
+                    <executable>true</executable>
                 </configuration>
             </plugin>
         </plugins>
