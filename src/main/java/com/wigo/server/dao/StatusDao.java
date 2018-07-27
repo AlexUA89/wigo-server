@@ -74,7 +74,7 @@ public class StatusDao {
     }
 
     public UUID createStatus(StatusDto status) {
-        List<StatusDto> result = jdbcTemplate.query(GET_STATUS_SQL, new MapSqlParameterSource("name", status.getName()), statusDtoMapper);
+        List<StatusDto> result = jdbcTemplate.query(GET_STATUS_BY_NAME_SQL, new MapSqlParameterSource("name", status.getName()), statusDtoMapper);
         if(!result.isEmpty()) {
            throw new StatusAlreadyExist(result.get(0).getId());
         }
