@@ -20,7 +20,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @Configuration
-@ComponentScan({"com.wigo.server.controllers", "com.wigo.server.config"})
+@ComponentScan({"com.wigo.server.controllers", "com.wigo.server.config","com.wigo.server.service"})
 public class WigoConfiguration extends WebMvcConfigurerAdapter {
 
     @Bean

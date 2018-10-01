@@ -1,6 +1,7 @@
-package com.wigo.server.controllers;
+package com.wigo.server.service;
 
 import com.google.common.io.Resources;
+import com.wigo.server.controllers.LoginController;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 

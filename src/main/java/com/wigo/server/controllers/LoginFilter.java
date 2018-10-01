@@ -1,6 +1,7 @@
 package com.wigo.server.controllers;
 
 import com.wigo.server.WigoEndpoints;
+import com.wigo.server.service.JwtLogic;
 import io.jsonwebtoken.JwtException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
