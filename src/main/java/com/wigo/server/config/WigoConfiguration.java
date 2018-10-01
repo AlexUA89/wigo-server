@@ -14,6 +14,7 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import org.springframework.web.client.RestOperations;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import java.util.Arrays;
@@ -21,7 +22,7 @@ import java.util.List;
 
 @Configuration
 @ComponentScan({"com.wigo.server.controllers", "com.wigo.server.config","com.wigo.server.service"})
-public class WigoConfiguration extends WebMvcConfigurerAdapter {
+public class WigoConfiguration implements WebMvcConfigurer {
 
     @Bean
     public RestOperations restOperations(RestTemplateBuilder builder) {
