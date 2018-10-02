@@ -1,0 +1,74 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="2018-10-02-creation-of-database" author="Alex">
+        <sql>
+
+            CREATE TABLE IF NOT EXISTS users (
+            id UUID PRIMARY KEY,
+            nickname varchar NOT NULL,
+            name varchar NOT NULL,
+            email varchar,
+            fb_id varchar UNIQUE NOT NULL
+            );
+
+            CREATE TABLE IF NOT EXISTS statuses (
+            id UUID PRIMARY KEY,
+            user_id UUID NOT NULL REFERENCES users,
+            latitude decimal(9, 6) NOT NULL,
+            longitude decimal(9, 6) NOT NULL,
+            name varchar NOT NULL,
+            text varchar NOT NULL,
+            url varchar,
+            start_date timestamp,
+            end_date timestamp,
+            kind varchar check (kind in ('event', 'chat')),
+            category varchar NOT NULL
+            );
+
+            CREATE TABLE IF NOT EXISTS images (
+            url varchar PRIMARY KEY,
+            user_id UUID not null REFERENCES users
+            );
+
+            CREATE TABLE IF NOT EXISTS status_images (
+            status_id UUID not null REFERENCES statuses,
+            url varchar not null
+            );
+
+            CREATE INDEX IF NOT EXISTS statuses_search ON statuses USING gin(to_tsvector('english', name || '\n'|| text));
+
+            CREATE TABLE status_hashtags (
+            status_id UUID NOT NULL REFERENCES statuses,
+            hashtag varchar not null
+            );
+
+            CREATE TABLE IF NOT EXISTS messages (
+            id UUID PRIMARY KEY,
+            status_id UUID NOT NULL REFERENCES statuses,
+            user_id UUID NOT NULL REFERENCES users,
+            text varchar NOT NULL,
+            created timestamp NOT NULL
+            );
+
+            insert into users(id, nickname, name, email, fb_id) values
+            ('f908854b-93f5-48bc-9213-7abcb1169d48', 'admin', 'admin', 'admin@wigo.com',
+            'f908854b-93f5-48bc-9213-7abcb1169d48');
+        </sql>
+        <rollback>
+            <sql>
+                DROP TABLE IF EXISTS users;
+                DROP TABLE IF EXISTS images;
+                DROP TABLE IF EXISTS statuses;
+                DROP TABLE IF EXISTS status_images;
+                DROP TABLE IF EXISTS messages;
+            </sql>
+        </rollback>
+    </changeSet>
+
+
+</databaseChangeLog>
