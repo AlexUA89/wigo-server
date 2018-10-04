@@ -1,7 +1,8 @@
 package com.wigo.server.dto;
 
+import java.net.URL;
 import java.time.Instant;
-import java.util.UUID;
+import java.util.*;
 
 public class BriefStatusDto {
 
@@ -13,7 +14,7 @@ public class BriefStatusDto {
 
     private String name;
 
-    private CategoryDto category;
+    private String category;
 
     private String kind;
 
@@ -25,7 +26,7 @@ public class BriefStatusDto {
 
     }
 
-    public BriefStatusDto(UUID id, double latitude, double longitude, String name, CategoryDto category, Instant startDate, Instant endDate) {
+    public BriefStatusDto(UUID id, double latitude, double longitude, String name, String category, Instant startDate, Instant endDate) {
         this.id = id;
         this.latitude = latitude;
         this.longitude = longitude;
@@ -67,11 +68,11 @@ public class BriefStatusDto {
         this.name = name;
     }
 
-    public CategoryDto getCategory() {
+    public String getCategory() {
         return category;
     }
 
-    public void setCategory(CategoryDto category) {
+    public void setCategory(String category) {
         this.category = category;
     }
 

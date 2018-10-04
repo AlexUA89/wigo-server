@@ -6,6 +6,5 @@
         http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
     <include file="2018-10-02-database-creation.xml" relativeToChangelogFile="true"/>
-    <include file="2018-10-04-create-category-table.xml" relativeToChangelogFile="true"/>
 
 </databaseChangeLog>
