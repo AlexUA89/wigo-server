@@ -112,7 +112,7 @@ public class LoaderFromSheet {
                     Instant.from(formatter.parse((String) row.get(3))),
                     row.get(9).equals("Event") ? StatusKind.event : StatusKind.place,
                     new HashSet<>(),
-                    "",
+                    "CHAT", // TODO should be defined correctly
                     urls));
         }
         return result;
