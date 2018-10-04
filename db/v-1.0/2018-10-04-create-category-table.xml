@@ -1,0 +1,30 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="2018-10-04-create-category-table" author="Val">
+        <sql>
+
+            CREATE TABLE IF NOT EXISTS categories (
+            id UUID PRIMARY KEY,
+            name varchar NOT NULL,
+            image_url varchar,
+            parent_id UUID REFERENCES categories
+            );
+
+            alter table statuses drop column if exists category;
+            alter table statuses add column if not exists category_id UUID REFERENCES categories;
+
+        </sql>
+        <rollback>
+            <sql>
+                DROP TABLE IF EXISTS category;
+            </sql>
+        </rollback>
+    </changeSet>
+
+
+</databaseChangeLog>
