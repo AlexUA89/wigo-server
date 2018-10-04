@@ -35,7 +35,8 @@ public class LoaderFromSheet {
     private static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
     private static final String TOKENS_DIRECTORY_PATH = "tokens";
     private static HttpTransport HTTP_TRANSPORT = new NetHttpTransport();
-    private static GenericUrl pushStatusEndpoint = new GenericUrl("http://localhost:8080/api/status");
+    private static GenericUrl pushStatusEndpoint = new GenericUrl("http://54.37.10.104:8080/api/status");
+    private static final String spreadsheetId = "18x15fG4BXVrdFdNA3S0WVLJmV1pVJaDkmHMDVRzP_Og";
 
     /**
      * Global instance of the scopes required by this quickstart.
@@ -79,7 +80,7 @@ public class LoaderFromSheet {
 
         // Build a new authorized API client service.
         final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
-        final String spreadsheetId = "18x15fG4BXVrdFdNA3S0WVLJmV1pVJaDkmHMDVRzP_Og";
+
         final String range = "Form Responses 1";
         Sheets service = new Sheets.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(HTTP_TRANSPORT))
                 .setApplicationName(APPLICATION_NAME)
@@ -88,16 +89,7 @@ public class LoaderFromSheet {
                 .get(spreadsheetId, range)
                 .execute();
         List<StatusDto> statuses = parseToStatuses(response.getValues());
-        List<UUID> newIds = sendDataToServer(statuses);
-        Sheets.Spreadsheets.Values values = service.spreadsheets().values();
-        for (int i = 0; i < newIds.size(); i++) {
-            if (newIds.get(i) != null) {
-                ValueRange value = new ValueRange();
-                value.setMajorDimension("ROWS");
-                value.setValues(Arrays.asList(Arrays.asList(newIds.get(i).toString())));
-                values.update(spreadsheetId, "K" + (i + 2), value).setValueInputOption("USER_ENTERED").execute();
-            }
-        }
+        sendDataToServerAndUpdateSheet(statuses, service.spreadsheets().values());
         System.out.println("Load completed...");
     }
 
@@ -127,8 +119,7 @@ public class LoaderFromSheet {
     }
 
 
-    private static List<UUID> sendDataToServer(List<StatusDto> statuses) throws IOException {
-        List<UUID> results = Arrays.asList(new UUID[statuses.size()]);
+    private static void sendDataToServerAndUpdateSheet(List<StatusDto> statuses, Sheets.Spreadsheets.Values values) throws IOException {
         HttpRequestFactory requestFactory
                 = HTTP_TRANSPORT.createRequestFactory(
                 (HttpRequest request) -> {
@@ -153,16 +144,21 @@ public class LoaderFromSheet {
                     newId = UUID.fromString(CharStreams.toString(reader).replace("\"", ""));
                 }
                 if (newId != null) {
-                    results.set(i, newId);
+                    ValueRange value = new ValueRange();
+                    value.setMajorDimension("ROWS");
+                    value.setValues(Arrays.asList(Arrays.asList(newId.toString())));
+                    values.update(spreadsheetId, "K" + (i + 2), value).setValueInputOption("USER_ENTERED").execute();
+                    value.setValues(Arrays.asList(Arrays.asList("ADDED")));
+                    values.update(spreadsheetId, "L" + (i + 2), value).setValueInputOption("USER_ENTERED").execute();
                 }
             } catch (HttpResponseException e) {
-                String error = "Event " + s.getName() + " was not published";
-                if(e.getStatusCode()==400) {
-                    error += ". This event already exist in system";
-                }
+                String error = "Status code:"+e.getStatusCode()+" Event " + s.getName() + " was not published, error:"+e.getContent();
+                ValueRange value = new ValueRange();
+                value.setMajorDimension("ROWS");
+                value.setValues(Arrays.asList(Arrays.asList(error)));
+                values.update(spreadsheetId, "L" + (i + 2), value).setValueInputOption("USER_ENTERED").execute();
                 System.out.println(error);
             }
         }
-        return results;
     }
 }
