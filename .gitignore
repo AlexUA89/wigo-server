@@ -1,3 +1,8 @@
 .idea
 *.iml
 /target
+/src/main/webapp/node_modules
+/src/main/webapp/package-lock.json
+/src/main/resources/static/built
+/loaders/googlesheets/out
+/loaders/googlesheets/.gradle
