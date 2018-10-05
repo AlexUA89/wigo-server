@@ -18,3 +18,6 @@ CATALINA_OPTS="-Djava.net.preferIPv4Stack=true"
 4) Change TOMCAT/bin/startup.sh:
 exec authbind --deep "$PRGDIR"/"$EXECUTABLE" start "$@"
 # OLD: exec "$PRGDIR"/"$EXECUTABLE" start "$@"
+
+5) start postgres
+/etc/init.d/postgresql start

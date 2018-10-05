@@ -40,4 +40,8 @@ public class JwtLogic {
         }
     }
 
+    public static void main(String[] args) throws IOException {
+        System.out.println(new JwtLogic(new JwtKeyProvider().jwtKey()).getJwtToken(UUID.fromString("f908854b-93f5-48bc-9213-7abcb1169d48")));
+    }
+
 }
