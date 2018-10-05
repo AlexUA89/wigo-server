@@ -20,16 +20,12 @@ public class LoginController {
 
     private static final String FB_ME_URL = "https://graph.facebook.com/v2.7/me?access_token={0}&" +
             "fields=id,name,first_name,middle_name,last_name,email,link&format=json&sdk=android";
-    private final UserDao userDao;
-    private final RestOperations restOperations;
-    private final JwtLogic jwtLogic;
-
     @Autowired
-    public LoginController(UserDao userDao, RestOperations restOperations, JwtLogic jwtLogic) {
-        this.userDao = userDao;
-        this.restOperations = restOperations;
-        this.jwtLogic = jwtLogic;
-    }
+    private UserDao userDao;
+    @Autowired
+    private RestOperations restOperations;
+    @Autowired
+    private  JwtLogic jwtLogic;
 
     @PostMapping(path = WigoEndpoints.LOGIN)
     public LoginDto login(@RequestBody LoginData loginData) {

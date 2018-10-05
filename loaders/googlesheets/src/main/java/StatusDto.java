@@ -22,8 +22,6 @@ public class StatusDto {
 
     private Instant endDate;
 
-    private StatusKind kind;
-
     private Set<String> hashtags = new HashSet<>();
 
     private String category;
@@ -34,7 +32,7 @@ public class StatusDto {
 
     }
 
-    public StatusDto(UUID id, UUID userId, double latitude, double longitude, String name, String text, URL url, Instant startDate, Instant endDate, StatusKind kind, Set<String> hashtags, String category, List<URL> images) {
+    public StatusDto(UUID id, UUID userId, double latitude, double longitude, String name, String text, URL url, Instant startDate, Instant endDate, Set<String> hashtags, String category, List<URL> images) {
         this.id = id;
         this.userId = userId;
         this.latitude = latitude;
@@ -44,7 +42,6 @@ public class StatusDto {
         this.url = url;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.kind = kind;
         this.hashtags = hashtags;
         this.category = category;
         this.images = images;
@@ -112,14 +109,6 @@ public class StatusDto {
 
     public void setEndDate(Instant endDate) {
         this.endDate = endDate;
-    }
-
-    public StatusKind getKind() {
-        return kind;
-    }
-
-    public void setKind(StatusKind kind) {
-        this.kind = kind;
     }
 
     public Set<String> getHashtags() {

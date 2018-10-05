@@ -24,11 +24,9 @@ public class StatusDto {
 
     private Instant endDate;
 
-    private StatusKind kind;
-
     private Set<String> hashtags = new HashSet<>();
 
-    private CategoryDto category;
+    private UUID category_id;
 
     private List<URL> images = new ArrayList<>();
 
@@ -36,7 +34,7 @@ public class StatusDto {
 
     }
 
-    public StatusDto(UUID id, UUID userId, double latitude, double longitude, String name, String text, URL url, Instant startDate, Instant endDate, StatusKind kind, Set<String> hashtags, CategoryDto category, List<URL> images) {
+    public StatusDto(UUID id, UUID userId, double latitude, double longitude, String name, String text, URL url, Instant startDate, Instant endDate, Set<String> hashtags, UUID category_id, List<URL> images) {
         this.id = id;
         this.userId = userId;
         this.latitude = latitude;
@@ -46,9 +44,8 @@ public class StatusDto {
         this.url = url;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.kind = kind;
         this.hashtags = hashtags;
-        this.category = category;
+        this.category_id = category_id;
         this.images = images;
     }
 
@@ -116,14 +113,6 @@ public class StatusDto {
         this.endDate = endDate;
     }
 
-    public StatusKind getKind() {
-        return kind;
-    }
-
-    public void setKind(StatusKind kind) {
-        this.kind = kind;
-    }
-
     public Set<String> getHashtags() {
         return hashtags;
     }
@@ -140,19 +129,19 @@ public class StatusDto {
         this.url = url;
     }
 
-    public CategoryDto getCategory() {
-        return category;
-    }
-
-    public void setCategory(CategoryDto category) {
-        this.category = category;
-    }
-
     public List<URL> getImages() {
         return images;
     }
 
     public void setImages(List<URL> images) {
         this.images = images;
+    }
+
+    public UUID getCategoryId() {
+        return category_id;
+    }
+
+    public void setCategoryId(UUID category_id) {
+        this.category_id = category_id;
     }
 }

@@ -1,4 +1,4 @@
-package com.wigo.server.dao;
+package com.wigo.server.utils;
 
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;

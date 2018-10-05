@@ -16,13 +16,9 @@ import java.util.UUID;
 @RequestMapping(WigoEndpoints.API_URL)
 public class CategoryController {
     public static final String DOC_URL = "/category";
-    private final CategoryDao categoryDao;
 
     @Autowired
-    public CategoryController(CategoryDao categoryDao) {
-        this.categoryDao = categoryDao;
-    }
-
+    private CategoryDao categoryDao;
 
     @GetMapping(DOC_URL + "/list")
     public List<CategoryDto> getcategoriesList() {
