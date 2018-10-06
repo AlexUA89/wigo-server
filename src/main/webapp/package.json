@@ -36,6 +36,7 @@
     "webpack-cli": "^3.1.0",
     "css-loader": "0.28.11",
     "url-loader": "1.0.1",
-    "file-loader": "1.1.11"
+    "file-loader": "1.1.11",
+    "react-google-maps": "9.4.5"
   }
 }
