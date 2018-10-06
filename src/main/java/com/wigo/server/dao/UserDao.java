@@ -1,7 +1,7 @@
 package com.wigo.server.dao;
 
-import com.wigo.server.dto.User;
-import com.wigo.server.dto.UserDto;
+import com.wigo.server.dao.constants.UserQueries;
+import com.wigo.server.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -16,15 +16,12 @@ import javax.sql.DataSource;
 import java.util.List;
 import java.util.UUID;
 
-import static com.wigo.server.dao.DaoUtils.beanParameterSource;
-import static com.wigo.server.dao.DaoUtils.joinParameterSources;
+import static com.wigo.server.utils.DaoUtils.beanParameterSource;
 import static org.springframework.transaction.annotation.Isolation.READ_COMMITTED;
 
 @Repository
 @Transactional(isolation = READ_COMMITTED)
 public class UserDao {
-    private static final String GET_USER_BY_FB_ID_SQL = "select id, nickname, name, email, fb_id from users where fb_id = :fbId";
-    private static final String UPDATE_USER_SQL = "update users set name = :name, nickname = :nickname, email = :email where fb_id = :fbId";
 
     private final RowMapper<User> userDtoMapper = new BeanPropertyRowMapper<>(User.class);
     private final NamedParameterJdbcTemplate jdbcTemplate;
@@ -37,7 +34,7 @@ public class UserDao {
     }
 
     public User getUserByFbId(String fbId) {
-        List<User> l = jdbcTemplate.query(GET_USER_BY_FB_ID_SQL, new MapSqlParameterSource("fbId", fbId), userDtoMapper);
+        List<User> l = jdbcTemplate.query(UserQueries.GET_USER_BY_FB_ID_SQL, new MapSqlParameterSource("fbId", fbId), userDtoMapper);
         return l.isEmpty() ? null : l.get(0);
     }
 
@@ -48,7 +45,7 @@ public class UserDao {
     }
 
     public void updateUserByFbId(User user) {
-        if (jdbcTemplate.update(UPDATE_USER_SQL, beanParameterSource(user)) == 0)
+        if (jdbcTemplate.update(UserQueries.UPDATE_USER_SQL, beanParameterSource(user)) == 0)
             throw new DataRetrievalFailureException("User doesn't exist");
     }
 }

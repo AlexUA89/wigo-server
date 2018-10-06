@@ -1,4 +1,4 @@
-package com.wigo.server.dao;
+package com.wigo.server.dto;
 
 import java.net.URL;
 import java.time.Instant;
@@ -6,13 +6,13 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-import static com.wigo.server.dao.DaoUtils.MAX_INSTANT;
-import static com.wigo.server.dao.DaoUtils.MIN_INSTANT;
+import static com.wigo.server.utils.DaoUtils.MAX_INSTANT;
+import static com.wigo.server.utils.DaoUtils.MIN_INSTANT;
 
 /**
  * Created by alyaxey on 9/16/16.
  */
-public class StatusSearchParams {
+public class StatusSearchParamsDto {
     private double startLatitude = -1e4;
     private double endLatitude = 1e4;
     private double startLongitude = -1e4;

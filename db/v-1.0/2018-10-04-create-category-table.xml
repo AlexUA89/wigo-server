@@ -1,0 +1,42 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="2018-10-06-create-category-table" author="val">
+        <sql>
+            CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
+            CREATE TABLE IF NOT EXISTS categories (
+            id UUID PRIMARY KEY default uuid_generate_v4(),
+            name varchar NOT NULL,
+            image_url varchar NOT NULL,
+            parent_id UUID REFERENCES categories
+            );
+
+        </sql>
+        <rollback>
+            <sql>
+                DROP TABLE IF EXISTS categories;
+            </sql>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="2018-10-06-drop-column-category" author="val">
+        <dropColumn tableName="statuses" columnName="category"/>
+    </changeSet>
+
+    <changeSet id="2018-10-06-drop-column-kind" author="val">
+        <dropColumn tableName="statuses" columnName="kind"/>
+    </changeSet>
+
+    <changeSet id="2018-10-06-add-column-category_id" author="val">
+        <addColumn tableName="statuses">
+            <column name="category_id" type="UUID">  <constraints foreignKeyName="fk_to_category" references="categories(id)"/> </column>
+        </addColumn>
+    </changeSet>
+
+
+</databaseChangeLog>

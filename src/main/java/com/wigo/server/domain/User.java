@@ -1,4 +1,4 @@
-package com.wigo.server.dto;
+package com.wigo.server.domain;
 
 import java.util.UUID;
 

@@ -19,13 +19,11 @@ import static org.springframework.web.bind.annotation.RequestMethod.*;
 
 @Component
 public class LoginFilter implements Filter {
+
     private static final EnumSet<RequestMethod> MUTATING_METHODS = EnumSet.of(PUT, POST, PATCH, DELETE);
-    private final JwtLogic jwtLogic;
 
     @Autowired
-    public LoginFilter(JwtLogic jwtLogic) {
-        this.jwtLogic = jwtLogic;
-    }
+    private JwtLogic jwtLogic;
 
     @Override
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {

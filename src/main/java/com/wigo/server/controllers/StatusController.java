@@ -6,8 +6,7 @@ import com.wigo.server.dao.*;
 import com.wigo.server.dto.BriefStatusDto;
 import com.wigo.server.dto.MessageDto;
 import com.wigo.server.dto.StatusDto;
-import com.wigo.server.dto.UserDto;
-import com.wigo.server.errors.StatusNotFoundExeption;
+import com.wigo.server.dto.StatusSearchParamsDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,23 +14,19 @@ import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
 
-import static com.wigo.server.dao.DaoUtils.MIN_INSTANT;
-import static com.wigo.server.dao.DaoUtils.MIN_INSTANT_STR;
+import static com.wigo.server.utils.DaoUtils.MIN_INSTANT_STR;
 
 @RestController
 @RequestMapping(WigoEndpoints.API_URL)
 public class StatusController {
-    private final StatusDao statusDao;
-    private final MessageDao messageDao;
 
     @Autowired
-    public StatusController(StatusDao statusDao, MessageDao messageDao) {
-        this.statusDao = statusDao;
-        this.messageDao = messageDao;
-    }
+    private StatusDao statusDao;
+    @Autowired
+    private MessageDao messageDao;
 
     @GetMapping(path = WigoEndpoints.STATUS)
-    public List<BriefStatusDto> getStatuses(@ModelAttribute StatusSearchParams searchParams) {
+    public List<BriefStatusDto> getStatuses(@ModelAttribute StatusSearchParamsDto searchParams) {
         return statusDao.getStatuses(searchParams);
     }
 
