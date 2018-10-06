@@ -18,7 +18,7 @@ import static org.springframework.transaction.annotation.Isolation.READ_COMMITTE
 @Transactional(isolation = READ_COMMITTED)
 public class LoginController {
 
-    private static final String FB_ME_URL = "https://graph.facebook.com/v2.7/me?access_token={0}&" +
+    private static final String FB_ME_URL = "https://graph.facebook.com/v2.8/me?access_token={0}&" +
             "fields=id,name,first_name,middle_name,last_name,email,link&format=json&sdk=android";
     @Autowired
     private UserDao userDao;
