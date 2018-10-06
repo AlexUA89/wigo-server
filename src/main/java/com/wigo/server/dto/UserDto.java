@@ -1,5 +1,7 @@
 package com.wigo.server.dto;
 
+import com.wigo.server.domain.User;
+
 import java.util.UUID;
 
 public class UserDto {

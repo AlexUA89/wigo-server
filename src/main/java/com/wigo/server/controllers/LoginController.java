@@ -3,7 +3,7 @@ package com.wigo.server.controllers;
 import com.wigo.server.WigoEndpoints;
 import com.wigo.server.dao.UserDao;
 import com.wigo.server.dto.LoginDto;
-import com.wigo.server.dto.User;
+import com.wigo.server.domain.User;
 import com.wigo.server.dto.UserDto;
 import com.wigo.server.service.JwtLogic;
 import org.springframework.beans.factory.annotation.Autowired;

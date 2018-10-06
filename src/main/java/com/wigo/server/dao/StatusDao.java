@@ -1,6 +1,8 @@
 package com.wigo.server.dao;
 
 import com.wigo.server.dao.constants.StatusQueries;
+import com.wigo.server.domain.Status.StatusHashtag;
+import com.wigo.server.domain.Status.StatusImage;
 import com.wigo.server.dto.BriefStatusDto;
 import com.wigo.server.dto.StatusDto;
 import com.wigo.server.dto.StatusSearchParamsDto;
@@ -121,65 +123,5 @@ public class StatusDao {
         return jdbcTemplate.queryForList(StatusQueries.GET_TOP_HASHTAGS_SQL,
                 new MapSqlParameterSource("prefix", escapeLike(prefix)).addValue("limit", limit),
                 String.class);
-    }
-
-    private static class StatusHashtag {
-        private UUID statusId;
-
-        private String hashtag;
-
-        public StatusHashtag() {
-        }
-
-        public StatusHashtag(UUID statusId, String hashtag) {
-            this.statusId = statusId;
-            this.hashtag = hashtag;
-        }
-
-        public UUID getStatusId() {
-            return statusId;
-        }
-
-        public void setStatusId(UUID statusId) {
-            this.statusId = statusId;
-        }
-
-        public String getHashtag() {
-            return hashtag;
-        }
-
-        public void setHashtag(String hashtag) {
-            this.hashtag = hashtag;
-        }
-    }
-
-    private static class StatusImage {
-        private UUID statusId;
-
-        private URL url;
-
-        public StatusImage() {
-        }
-
-        public StatusImage(UUID statusId, URL url) {
-            this.statusId = statusId;
-            this.url = url;
-        }
-
-        public UUID getStatusId() {
-            return statusId;
-        }
-
-        public void setStatusId(UUID statusId) {
-            this.statusId = statusId;
-        }
-
-        public URL getUrl() {
-            return url;
-        }
-
-        public void setUrl(URL url) {
-            this.url = url;
-        }
     }
 }

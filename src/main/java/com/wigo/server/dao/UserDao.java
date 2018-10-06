@@ -1,7 +1,7 @@
 package com.wigo.server.dao;
 
 import com.wigo.server.dao.constants.UserQueries;
-import com.wigo.server.dto.User;
+import com.wigo.server.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;

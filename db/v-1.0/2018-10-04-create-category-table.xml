@@ -5,25 +5,48 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd
         http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
-    <changeSet id="2018-10-04-create-category-table" author="Val">
+    <changeSet id="2018-10-06-create-category-table" author="val">
+        <!--<createTable tableName="categories">
+            <sql>
+
+                id uuid default uuid_generate_v4()
+
+            </sql>
+            &lt;!&ndash;<column name="id" type="UUID"> &lt;!&ndash;default uuid_generate_v4()&ndash;&gt;<constraints primaryKey="true"/></column>&ndash;&gt;
+            <column name="name" type="varchar"><constraints nullable="false"/></column>
+            <column name="image_url" type="varchar" />
+            <column name="parent_id" type="UUID"> <constraints foreignKeyName="fk_to_parent" references="categories(id)"/></column>
+        </createTable>-->
         <sql>
+            CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
             CREATE TABLE IF NOT EXISTS categories (
-            id UUID PRIMARY KEY,
+            id UUID PRIMARY KEY default uuid_generate_v4(),
             name varchar NOT NULL,
-            image_url varchar,
+            image_url varchar NOT NULL,
             parent_id UUID REFERENCES categories
             );
-
-            alter table statuses drop column if exists category;
-            alter table statuses add column if not exists category_id UUID REFERENCES categories;
 
         </sql>
         <rollback>
             <sql>
-                DROP TABLE IF EXISTS category;
+                DROP TABLE IF EXISTS categories;
             </sql>
         </rollback>
+    </changeSet>
+
+    <changeSet id="2018-10-06-drop-column-category" author="val">
+        <dropColumn tableName="statuses" columnName="category"/>
+    </changeSet>
+
+    <changeSet id="2018-10-06-drop-column-kind" author="val">
+        <dropColumn tableName="statuses" columnName="kind"/>
+    </changeSet>
+
+    <changeSet id="2018-10-06-add-column-category_id" author="val">
+        <addColumn tableName="statuses">
+            <column name="category_id" type="UUID">  <constraints foreignKeyName="fk_to_category" references="categories(id)"/> </column>
+        </addColumn>
     </changeSet>
 
 

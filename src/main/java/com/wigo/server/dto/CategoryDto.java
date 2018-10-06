@@ -10,12 +10,12 @@ public class CategoryDto {
 
     private String imageUrl;
 
-    private CategoryDto parentId;
+    private UUID parentId;
 
     public CategoryDto() {
     }
 
-    public CategoryDto(UUID id, String name, String imageUrl, CategoryDto parentId) {
+    public CategoryDto(UUID id, String name, String imageUrl, UUID parentId) {
         this.id = id;
         this.name = name;
         this.imageUrl = imageUrl;
@@ -46,11 +46,11 @@ public class CategoryDto {
         this.imageUrl = imageUrl;
     }
 
-    public CategoryDto getParentId() {
+    public UUID getParentId() {
         return parentId;
     }
 
-    public void setParentId(CategoryDto parentId) {
+    public void setParentId(UUID parentId) {
         this.parentId = parentId;
     }
 }
