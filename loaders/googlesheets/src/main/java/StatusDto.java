@@ -24,7 +24,7 @@ public class StatusDto {
 
     private Set<String> hashtags = new HashSet<>();
 
-    private String category;
+    private UUID category_id;
 
     private List<URL> images = new ArrayList<>();
 
@@ -32,7 +32,7 @@ public class StatusDto {
 
     }
 
-    public StatusDto(UUID id, UUID userId, double latitude, double longitude, String name, String text, URL url, Instant startDate, Instant endDate, Set<String> hashtags, String category, List<URL> images) {
+    public StatusDto(UUID id, UUID userId, double latitude, double longitude, String name, String text, URL url, Instant startDate, Instant endDate, Set<String> hashtags, UUID category_id, List<URL> images) {
         this.id = id;
         this.userId = userId;
         this.latitude = latitude;
@@ -43,7 +43,7 @@ public class StatusDto {
         this.startDate = startDate;
         this.endDate = endDate;
         this.hashtags = hashtags;
-        this.category = category;
+        this.category_id = category_id;
         this.images = images;
     }
 
@@ -127,19 +127,19 @@ public class StatusDto {
         this.url = url;
     }
 
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
     public List<URL> getImages() {
         return images;
     }
 
     public void setImages(List<URL> images) {
         this.images = images;
+    }
+
+    public UUID getCategoryId() {
+        return category_id;
+    }
+
+    public void setCategoryId(UUID category_id) {
+        this.category_id = category_id;
     }
 }
