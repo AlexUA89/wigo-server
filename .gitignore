@@ -6,3 +6,4 @@
 /src/main/resources/static/built
 /loaders/googlesheets/out
 /loaders/googlesheets/.gradle
+main.log
