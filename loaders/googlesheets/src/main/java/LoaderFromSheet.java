@@ -35,7 +35,7 @@ public class LoaderFromSheet {
     private static final String TOKENS_DIRECTORY_PATH = "tokens";
     private static HttpTransport HTTP_TRANSPORT = new NetHttpTransport();
     private static GenericUrl pushStatusEndpoint = new GenericUrl("http://54.37.10.104:8080/api/status");
-    private static GenericUrl getCategoryEndpoint = new GenericUrl("http://localhost:8080/api/category/list");
+    private static GenericUrl getCategoryEndpoint = new GenericUrl("http://54.37.10.104:8080/api/category/list");
     private static final String spreadsheetId = "18x15fG4BXVrdFdNA3S0WVLJmV1pVJaDkmHMDVRzP_Og";
 
     /**
