@@ -6,7 +6,7 @@
         http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
 
-    <changeSet  id="2018-10-07-add-non-null-category_id-status-clear" author="Alex">
+    <changeSet id="2018-10-07-add-non-null-category_id-status-clear" author="Alex">
         <delete tableName="status_images">
             <where></where>
         </delete>
@@ -20,6 +20,12 @@
 
     <changeSet id="2018-10-07-add-non-null-category_id-status-constraint" author="Alex">
         <addNotNullConstraint columnDataType="UUID" columnName="category_id" tableName="statuses"/>
+    </changeSet>
+
+    <changeSet author="2018-10-07-add-non-null-category_id-status-catalog-name-unique" id="addUniqueConstraint-example">
+        <addUniqueConstraint tableName="categories"
+                             columnNames="name"
+                             constraintName="unique_category_name"/>
     </changeSet>
 
 
