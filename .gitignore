@@ -6,4 +6,6 @@
 /src/main/resources/static/built
 /loaders/googlesheets/out
 /loaders/googlesheets/.gradle
+/loaders/googlesheets/err.txt
+/loaders/googlesheets/output.txt
 main.log
