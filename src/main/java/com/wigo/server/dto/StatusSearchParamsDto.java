@@ -5,6 +5,7 @@ import java.time.Instant;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 import static com.wigo.server.utils.DaoUtils.MAX_INSTANT;
 import static com.wigo.server.utils.DaoUtils.MIN_INSTANT;
@@ -20,7 +21,7 @@ public class StatusSearchParamsDto {
     private Instant startDate = MIN_INSTANT;
     private Instant endDate = MAX_INSTANT;
     private String search;
-    private Set<String> categories = new HashSet<>();
+    private Set<UUID> categories = new HashSet<>();
     private URL url;
 
     public double getStartLatitude() {
@@ -79,14 +80,6 @@ public class StatusSearchParamsDto {
         this.search = search;
     }
 
-    public Set<String> getCategories() {
-        return categories.isEmpty() ? Collections.singleton("") : categories;
-    }
-
-    public void setCategories(Set<String> categories) {
-        this.categories = categories;
-    }
-
     public boolean getNoCategories() {
         return categories.isEmpty();
     }
@@ -97,5 +90,13 @@ public class StatusSearchParamsDto {
 
     public void setUrl(URL url) {
         this.url = url;
+    }
+
+    public Set<UUID> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(Set<UUID> categories) {
+        this.categories = categories;
     }
 }
