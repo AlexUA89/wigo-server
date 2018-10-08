@@ -108,6 +108,8 @@ public class LoaderFromSheet {
                 urls.add(new URL(url));
             }
             String categoryName = row.get(10) != null ? (String) row.get(10) : (String) row.get(11);
+            if (categoryName == null)
+                throw new IllegalArgumentException("Category should not be null in status " + row.get(1));
             CategoryDto categoryDto = allCategories.get(categoryName);
             if (categoryDto == null)
                 throw new IllegalArgumentException("There is no category with name: " + categoryName);
