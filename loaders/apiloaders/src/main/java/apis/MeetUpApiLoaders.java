@@ -1,16 +1,21 @@
 package apis;
 
-import sheet.CategoryDto;
-import sheet.Status;
+import dome.SearchParameters;
+import dome.Status;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
-public class MeetUpApiLoaders implements ApiLoader {
+public class MeetUpApiLoaders extends ApiLoader {
 
     @Override
-    public List<Status> loadFromApi() {
+    protected String getApiName() {
+        return "MeetUp";
+    }
+
+    @Override
+    protected List<Status> loadFromApi(SearchParameters parameters) {
+        // TODO load statuses from API
         return new ArrayList<>();
     }
 }

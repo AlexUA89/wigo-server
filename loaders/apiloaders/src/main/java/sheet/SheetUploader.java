@@ -13,6 +13,7 @@ import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.api.services.sheets.v4.Sheets;
 import com.google.api.services.sheets.v4.SheetsScopes;
 import com.google.api.services.sheets.v4.model.ValueRange;
+import dome.Status;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -97,7 +98,11 @@ public class SheetUploader {
                 s.getUrl().toString(),
                 s.getText(),
                 images.toString(),
-                s.getCategoryName()
+                s.getCategoryName(),
+                "",
+                "",
+                "",
+                s.getLocationDescription()
         )));
 
         values.append(spreadsheetId, "Form Responses 1!A:A", value).setValueInputOption("USER_ENTERED").execute();

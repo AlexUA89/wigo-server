@@ -1,14 +1,21 @@
 package apis;
 
-import sheet.CategoryDto;
-import sheet.Status;
+import dome.SearchParameters;
+import dome.Status;
 
 import java.util.List;
-import java.util.Map;
 
-public interface ApiLoader {
+public abstract class ApiLoader {
 
-    List<Status> loadFromApi();
+    protected abstract List<Status> loadFromApi(SearchParameters parameters);
 
+    protected abstract String getApiName();
+
+    public List<Status> loadStatuses(SearchParameters parameters) {
+        List<Status> result = loadFromApi(parameters);
+        result.forEach(s -> s.setLocationDescription(parameters.getDescRiption()));
+        System.out.println("Statuses loaded " + result.size() + " statuses from " + getApiName() + " for location " + parameters.getDescRiption());
+        return result;
+    }
 
 }

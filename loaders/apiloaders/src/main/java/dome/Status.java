@@ -1,4 +1,4 @@
-package sheet;
+package dome;
 
 import java.net.URL;
 import java.time.Instant;
@@ -29,6 +29,8 @@ public class Status {
     private String categoryName;
 
     private List<URL> images = new ArrayList<>();
+
+    private String locationDescription;
 
     public Status(){
 
@@ -143,5 +145,13 @@ public class Status {
 
     public void setCategoryName(String categoryName) {
         this.categoryName = categoryName;
+    }
+
+    public String getLocationDescription() {
+        return locationDescription;
+    }
+
+    public void setLocationDescription(String locationDescription) {
+        this.locationDescription = locationDescription;
     }
 }

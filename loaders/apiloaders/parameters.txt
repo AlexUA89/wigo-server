@@ -1,0 +1,2 @@
+Latitude   ;Longitude   ;Radius km   ;Description
+50.450945  ;30.522526   ;100         ;Kyiv
