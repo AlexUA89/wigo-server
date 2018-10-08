@@ -1,0 +1,171 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="2018-10-08-fill-category-table-script" author="Val">
+
+        <insert tableName="categories">
+            <column name="name">CHAT</column>
+            <column name="image_url">https://drive.google.com/uc?export=download&amp;id=1aJoHQ3BFcLqZFDQLeu9EqnAWuH-w208B</column>
+        </insert>
+
+        <insert tableName="categories">
+            <column name="name">EVENT</column>
+            <column name="image_url">https://drive.google.com/uc?export=download&amp;id=1yXXUKg_MKxGchZMzL5ZUuZ4HsW7sgsHw</column>
+        </insert>
+
+        <insert tableName="categories">
+            <column name="name">PLACE</column>
+            <column name="image_url">https://drive.google.com/uc?export=download&amp;id=15WYe2tBpBOi_Or_ewsEgNHGapOzkjA_w</column>
+        </insert>
+
+        <insert tableName="categories">
+            <column name="name">DINING_EVENT</column>
+            <column name="image_url">https://drive.google.com/uc?export=download&amp;id=11FkiPzDL2AQs54FjOUvn_Im_3SvV0zw6</column>
+            <column name="parent_id" valueComputed="(SELECT id FROM categories WHERE name = 'EVENT')"/>
+        </insert>
+
+        <insert tableName="categories">
+            <column name="name">IT</column>
+            <column name="image_url">https://drive.google.com/uc?export=download&amp;id=1AXYNtyNiQ-2Bfqg1a_I-Ud-6E-0PUzwL</column>
+            <column name="parent_id" valueComputed="(SELECT id FROM categories WHERE name = 'EVENT')"/>
+        </insert>
+
+        <insert tableName="categories">
+            <column name="name">FESTIVAL_EVENT</column>
+            <column name="image_url">https://drive.google.com/uc?export=download&amp;id=15WYe2tBpBOi_Or_ewsEgNHGapOzkjA_w</column>
+            <column name="parent_id" valueComputed="(SELECT id FROM categories WHERE name = 'EVENT')"/>
+        </insert>
+
+        <insert tableName="categories">
+            <column name="name">COMEDY_EVENT</column>
+            <column name="image_url">https://drive.google.com/uc?export=download&amp;id=1MJnC3CnoMwZLbaD5uk8RDgX5bG_JTpwE</column>
+            <column name="parent_id" valueComputed="(SELECT id FROM categories WHERE name = 'EVENT')"/>
+        </insert>
+
+        <insert tableName="categories">
+            <column name="name">FITNESS</column>
+            <column name="image_url">https://drive.google.com/uc?export=download&amp;id=1VQxkI336nZquBASVTMpaTcwqqFxmjiys</column>
+            <column name="parent_id" valueComputed="(SELECT id FROM categories WHERE name = 'EVENT')"/>
+        </insert>
+
+        <insert tableName="categories">
+            <column name="name">SHOPPING</column>
+            <column name="image_url">https://drive.google.com/uc?export=download&amp;id=127n30Ci9lM5L0y-wXaR7zJe62eqyFlXq</column>
+            <column name="parent_id" valueComputed="(SELECT id FROM categories WHERE name = 'EVENT')"/>
+        </insert>
+
+        <insert tableName="categories">
+            <column name="name">RELIGIOUS_EVENT</column>
+            <column name="image_url">https://drive.google.com/uc?export=download&amp;id=16p8rohaSGzHJ9YGlLVT9BX1_lMg_dGcd</column>
+            <column name="parent_id" valueComputed="(SELECT id FROM categories WHERE name = 'EVENT')"/>
+        </insert>
+
+        <insert tableName="categories">
+            <column name="name">FOOD-TASTING</column>
+            <column name="image_url">https://drive.google.com/uc?export=download&amp;id=1Q1ktuXPbGOcXmhWheB5l9aCu0iZwTOR_</column>
+            <column name="parent_id" valueComputed="(SELECT id FROM categories WHERE name = 'EVENT')"/>
+        </insert>
+
+        <insert tableName="categories">
+            <column name="name">VOLUNTEERING</column>
+            <column name="image_url">https://drive.google.com/uc?export=download&amp;id=1vS6PE0SFTICqkE6dwqLFzWV76jJQ9AYu</column>
+            <column name="parent_id" valueComputed="(SELECT id FROM categories WHERE name = 'EVENT')"/>
+        </insert>
+
+        <insert tableName="categories">
+            <column name="name">BOOK_EVENT</column>
+            <column name="image_url">https://drive.google.com/uc?export=download&amp;id=1WaxexYvxLE6Xpyib30vk4n97l7_AXOaJ</column>
+            <column name="parent_id" valueComputed="(SELECT id FROM categories WHERE name = 'EVENT')"/>
+        </insert>
+
+        <insert tableName="categories">
+            <column name="name">MOVIE_EVENT</column>
+            <column name="image_url">https://drive.google.com/uc?export=download&amp;id=12PWI7srJn4uY1LACyHMulFTtI1J4je1G</column>
+            <column name="parent_id" valueComputed="(SELECT id FROM categories WHERE name = 'EVENT')"/>
+        </insert>
+
+        <insert tableName="categories">
+            <column name="name">DANCE_EVEN</column>
+            <column name="image_url">https://drive.google.com/uc?export=download&amp;id=1AYlHpfv389XnEJb-I6eUw7ZRxlhfUQL9</column>
+            <column name="parent_id" valueComputed="(SELECT id FROM categories WHERE name = 'EVENT')"/>
+        </insert>
+
+        <insert tableName="categories">
+            <column name="name">NIGHTLIFE</column>
+            <column name="image_url">https://drive.google.com/uc?export=download&amp;id=11Rxwc4GKRxGdFRQlUDBwrEAwdOlY8tT8</column>
+            <column name="parent_id" valueComputed="(SELECT id FROM categories WHERE name = 'EVENT')"/>
+        </insert>
+
+        <insert tableName="categories">
+            <column name="name">ART_EVENT</column>
+            <column name="image_url">https://drive.google.com/uc?export=download&amp;id=1wbNTlI220RSXjvjwNKIH1-TtOyw4hzb-</column>
+            <column name="parent_id" valueComputed="(SELECT id FROM categories WHERE name = 'EVENT')"/>
+        </insert>
+
+        <insert tableName="categories">
+            <column name="name">SPORTS_EVENT</column>
+            <column name="image_url">https://drive.google.com/uc?export=download&amp;id=1dq4dGKesVMJd01zkbe7OifqYBPo4KfZD</column>
+            <column name="parent_id" valueComputed="(SELECT id FROM categories WHERE name = 'EVENT')"/>
+        </insert>
+
+        <insert tableName="categories">
+            <column name="name">THEATER_EVENT</column>
+            <column name="image_url">https://drive.google.com/uc?export=download&amp;id=1JAWnfMfccFk9uX2ICOh6pS0sFfXwuNfT</column>
+            <column name="parent_id" valueComputed="(SELECT id FROM categories WHERE name = 'EVENT')"/>
+        </insert>
+
+        <insert tableName="categories">
+            <column name="name">CONFERENCE_EVENT</column>
+            <column name="image_url">https://drive.google.com/uc?export=download&amp;id=1AHCZTGcegUxpkctCsilq4rQY_gyOPCrc</column>
+            <column name="parent_id" valueComputed="(SELECT id FROM categories WHERE name = 'EVENT')"/>
+        </insert>
+
+        <insert tableName="categories">
+            <column name="name">FAMILY_EVENT</column>
+            <column name="image_url">https://drive.google.com/uc?export=download&amp;id=1IIh3dhXVMPBgI0zB_M7G9hdXH8bEGtaA</column>
+            <column name="parent_id" valueComputed="(SELECT id FROM categories WHERE name = 'EVENT')"/>
+        </insert>
+
+        <insert tableName="categories">
+            <column name="name">MEETUP</column>
+            <column name="image_url">https://drive.google.com/uc?export=download&amp;id=1CNws3Bj-3EhFbeAyXWAxQZp9d4lBy4H9</column>
+            <column name="parent_id" valueComputed="(SELECT id FROM categories WHERE name = 'EVENT')"/>
+        </insert>
+
+        <insert tableName="categories">
+            <column name="name">LECTURE</column>
+            <column name="image_url">https://drive.google.com/uc?export=download&amp;id=1eBMq54JJi442ApFAoVVKiMPUF9NBwLU1</column>
+            <column name="parent_id" valueComputed="(SELECT id FROM categories WHERE name = 'EVENT')"/>
+        </insert>
+
+        <insert tableName="categories">
+            <column name="name">MUSIC_EVENT</column>
+            <column name="image_url">https://drive.google.com/uc?export=download&amp;id=11xYKNzMbjuYREl4d5GO-ALruUjVrablC</column>
+            <column name="parent_id" valueComputed="(SELECT id FROM categories WHERE name = 'EVENT')"/>
+        </insert>
+
+        <insert tableName="categories">
+            <column name="name">WORKSHOP</column>
+            <column name="image_url">https://drive.google.com/uc?export=download&amp;id=1AOE7-kO1a-oSIKXlTl4hCqb3vGg_1opR</column>
+            <column name="parent_id" valueComputed="(SELECT id FROM categories WHERE name = 'EVENT')"/>
+        </insert>
+
+        <insert tableName="categories">
+            <column name="name">CELEBRATION</column>
+            <column name="image_url">https://drive.google.com/uc?export=download&amp;id=1YpEPIuSIq-ma1bp2oWlysgYAnpeHZqF7</column>
+            <column name="parent_id" valueComputed="(SELECT id FROM categories WHERE name = 'EVENT')"/>
+        </insert>
+
+        <insert tableName="categories">
+            <column name="name">ACTIVITY</column>
+            <column name="image_url">https://drive.google.com/uc?export=download&amp;id=1yXXUKg_MKxGchZMzL5ZUuZ4HsW7sgsHw</column>
+            <column name="parent_id" valueComputed="(SELECT id FROM categories WHERE name = 'EVENT')"/>
+        </insert>
+
+    </changeSet>
+
+</databaseChangeLog>
