@@ -1,7 +1,7 @@
 {
   "name": "spring-data-rest-and-reactjs",
   "version": "0.1.0",
-  "description": "Demo of ReactJS + Spring Data REST",
+  "description": "Wigo react application",
   "repository": {
     "type": "git",
     "url": "git@github.com:spring-guides/tut-react-and-spring-data-rest.git"
@@ -13,7 +13,7 @@
     "data",
     "react"
   ],
-  "author": "Greg L. Turnquist",
+  "author": "AlexUA89",
   "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/spring-guides/tut-react-and-spring-data-rest/issues"
@@ -33,6 +33,10 @@
     "@babel/preset-react": "^7.0.0",
     "babel-loader": "^8.0.2",
     "webpack": "^4.19.1",
-    "webpack-cli": "^3.1.0"
+    "webpack-cli": "^3.1.0",
+    "css-loader": "0.28.11",
+    "url-loader": "1.0.1",
+    "file-loader": "1.1.11",
+    "react-google-maps": "9.4.5"
   }
 }
