@@ -6,3 +6,16 @@
 /src/main/resources/static/built
 /loaders/googlesheets/out
 /loaders/googlesheets/.gradle
+/loaders/googlesheets/gradle
+/loaders/googlesheets/gradlew.bat
+/loaders/googlesheets/gradlew
+/loaders/googlesheets/err.txt
+/loaders/googlesheets/output.txt
+/loaders/apiloaders/gradle
+/loaders/apiloaders/out
+/loaders/apiloaders/.gradle
+/loaders/apiloaders/err.txt
+/loaders/apiloaders/output.txt
+/loaders/apiloaders/gradlew.bat
+/loaders/apiloaders/gradlew
+main.log

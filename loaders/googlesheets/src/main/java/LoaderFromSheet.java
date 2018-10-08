@@ -27,6 +27,7 @@ import java.time.Instant;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class LoaderFromSheet {
     private static final String APPLICATION_NAME = "Wigo";
@@ -34,6 +35,7 @@ public class LoaderFromSheet {
     private static final String TOKENS_DIRECTORY_PATH = "tokens";
     private static HttpTransport HTTP_TRANSPORT = new NetHttpTransport();
     private static GenericUrl pushStatusEndpoint = new GenericUrl("http://54.37.10.104:8080/api/status");
+    private static GenericUrl getCategoryEndpoint = new GenericUrl("http://54.37.10.104:8080/api/category/list");
     private static final String spreadsheetId = "18x15fG4BXVrdFdNA3S0WVLJmV1pVJaDkmHMDVRzP_Og";
 
     /**
@@ -42,6 +44,9 @@ public class LoaderFromSheet {
      */
     private static final List<String> SCOPES = Collections.singletonList(SheetsScopes.SPREADSHEETS);
     private static final String CREDENTIALS_FILE_PATH = "/credentials.json";
+
+
+    private static Map<String, CategoryDto> allCategories;
 
     /**
      * Creates an authorized Credential object.
@@ -76,6 +81,8 @@ public class LoaderFromSheet {
         PrintStream ps = new PrintStream(fos);
         System.setErr(ps);
 
+        allCategories = getAllCategories().stream().collect(Collectors.toMap(CategoryDto::getName, c -> c));
+
         // Build a new authorized API client service.
         final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
 
@@ -95,22 +102,27 @@ public class LoaderFromSheet {
         final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss").withZone(ZoneId.systemDefault());
         List<StatusDto> result = new ArrayList<>();
         for (List<Object> row : values.subList(1, values.size())) {
-            UUID id = row.size() == 1 ? UUID.fromString((String) row.get(10)) : null;
+            UUID id = row.size() > 12 ? UUID.fromString((String) row.get(12)) : null;
             ArrayList<URL> urls = new ArrayList<>();
-            for (String url : Arrays.asList(((String) row.get(8)).split(";"))) {
+            for (String url : Arrays.asList(((String) row.get(9)).split(";"))) {
                 urls.add(new URL(url));
             }
+            String categoryName = row.get(10) != null ? (String) row.get(10) : (String) row.get(11);
+            if (categoryName == null)
+                throw new IllegalArgumentException("Category should not be null in status " + row.get(1));
+            CategoryDto categoryDto = allCategories.get(categoryName);
+            if (categoryDto == null)
+                throw new IllegalArgumentException("There is no category with name: " + categoryName);
             result.add(new StatusDto(id, null,
-                    Double.parseDouble((String) row.get(4)),
                     Double.parseDouble((String) row.get(5)),
+                    Double.parseDouble((String) row.get(6)),
                     (String) row.get(1),
-                    (String) row.get(7),
-                    new URL((String) row.get(6)),
-                    Instant.from(formatter.parse((String) row.get(2))),
-                    Instant.from(formatter.parse((String) row.get(3))),
-                    row.get(9).equals("Event") ? StatusKind.event : StatusKind.place,
+                    (String) row.get(8),
+                    new URL((String) row.get(7)),
+                    row.get(3) != null ? Instant.from(formatter.parse((String) row.get(3))) : null,
+                    row.get(4) != null ? Instant.from(formatter.parse((String) row.get(4))) : null,
                     new HashSet<>(),
-                    "CHAT", // TODO should be defined correctly
+                    categoryDto.getId(),
                     urls));
         }
         return result;
@@ -135,7 +147,7 @@ public class LoaderFromSheet {
             HttpRequest request = requestFactory.buildPostRequest(pushStatusEndpoint, ByteArrayContent.fromString(null, objectMapper.writeValueAsString(s)));
             request.getHeaders().setContentType("application/json");
             request.getHeaders().setAuthorization("bearer eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJ3aWdvLmNvbSIsInN1YiI6ImY5MDg4NTRiLTkzZjUtNDhiYy05MjEzLTdhYmNiMTE2OWQ0OCIsImlhdCI6MTUzODU5MjQ4OSwiZXhwIjoxNTQxMTg0NDg5fQ.0uzlm9pHgTOSNZvvDBZEuM7crruRcLdTLV3ZJs_em9NlQbc2gQkA32cNu1Fk4qOt2dKDgQrwca5uMPbmXxFK_A");
-            try{
+            try {
                 HttpResponse response = request.execute();
                 UUID newId;
                 try (final Reader reader = new InputStreamReader(response.getContent())) {
@@ -150,7 +162,7 @@ public class LoaderFromSheet {
                     values.update(spreadsheetId, "L" + (i + 2), value).setValueInputOption("USER_ENTERED").execute();
                 }
             } catch (HttpResponseException e) {
-                String error = "Status code:"+e.getStatusCode()+" Event " + s.getName() + " was not published, error:"+e.getContent();
+                String error = "Status code:" + e.getStatusCode() + " Event " + s.getName() + " was not published, error:" + e.getContent();
                 ValueRange value = new ValueRange();
                 value.setMajorDimension("ROWS");
                 value.setValues(Arrays.asList(Arrays.asList(error)));
@@ -158,5 +170,28 @@ public class LoaderFromSheet {
                 System.out.println(error);
             }
         }
+    }
+
+    private static List<CategoryDto> getAllCategories() throws IOException {
+        List<CategoryDto> result;
+
+        HttpRequestFactory requestFactory
+                = HTTP_TRANSPORT.createRequestFactory(
+                (HttpRequest request) -> {
+                    request.setParser(new JsonObjectParser(JSON_FACTORY));
+                });
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        objectMapper.registerModule(new JavaTimeModule());
+
+        HttpRequest request = requestFactory.buildGetRequest(getCategoryEndpoint);
+        HttpResponse response = request.execute();
+        try (final Reader reader = new InputStreamReader(response.getContent())) {
+            result = Arrays.asList(objectMapper.readValue(CharStreams.toString(reader), CategoryDto[].class));
+        }
+        System.out.println("Got categories. Size: " + result.size());
+        return result;
     }
 }

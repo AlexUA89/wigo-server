@@ -8,12 +8,12 @@ import java.util.UUID;
 /**
  * Created by AlexUA89 on 3/13/2017.
  */
-@ResponseStatus(value = HttpStatus.BAD_REQUEST)
-public class StatusAlreadyExist extends RuntimeException {
+@ResponseStatus(value = HttpStatus.NOT_FOUND, reason = "No such status")
+public class StatusAlreadyExistException extends RuntimeException {
 
     private UUID statusId;
 
-    public StatusAlreadyExist(UUID statusId) {
+    public StatusAlreadyExistException(UUID statusId) {
         super("Status already exist with ID: " + statusId);
         this.statusId = statusId;
     }

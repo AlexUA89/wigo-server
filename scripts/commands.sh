@@ -21,3 +21,6 @@ exec authbind --deep "$PRGDIR"/"$EXECUTABLE" start "$@"
 
 5) start postgres
 /etc/init.d/postgresql start
+
+6) Update postgres for UUID
+apt-get install postgresql-contrib

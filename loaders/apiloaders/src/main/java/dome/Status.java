@@ -1,8 +1,10 @@
+package dome;
+
 import java.net.URL;
 import java.time.Instant;
 import java.util.*;
 
-public class StatusDto {
+public class Status {
 
     private UUID id;
 
@@ -24,15 +26,17 @@ public class StatusDto {
 
     private Set<String> hashtags = new HashSet<>();
 
-    private UUID category_id;
+    private String categoryName;
 
     private List<URL> images = new ArrayList<>();
 
-    public StatusDto(){
+    private String locationDescription;
+
+    public Status(){
 
     }
 
-    public StatusDto(UUID id, UUID userId, double latitude, double longitude, String name, String text, URL url, Instant startDate, Instant endDate, Set<String> hashtags, UUID category_id, List<URL> images) {
+    public Status(UUID id, UUID userId, double latitude, double longitude, String name, String text, URL url, Instant startDate, Instant endDate, Set<String> hashtags, String categoryName, List<URL> images) {
         this.id = id;
         this.userId = userId;
         this.latitude = latitude;
@@ -43,7 +47,7 @@ public class StatusDto {
         this.startDate = startDate;
         this.endDate = endDate;
         this.hashtags = hashtags;
-        this.category_id = category_id;
+        this.categoryName = categoryName;
         this.images = images;
     }
 
@@ -135,11 +139,19 @@ public class StatusDto {
         this.images = images;
     }
 
-    public UUID getCategoryId() {
-        return category_id;
+    public String getCategoryName() {
+        return categoryName;
     }
 
-    public void setCategoryId(UUID category_id) {
-        this.category_id = category_id;
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
+    }
+
+    public String getLocationDescription() {
+        return locationDescription;
+    }
+
+    public void setLocationDescription(String locationDescription) {
+        this.locationDescription = locationDescription;
     }
 }
