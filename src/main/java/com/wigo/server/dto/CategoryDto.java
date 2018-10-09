@@ -15,15 +15,21 @@ public class CategoryDto {
 
     private Instant created;
 
+    private String displayName;
+
+    private String desc;
+
     public CategoryDto() {
     }
 
-    public CategoryDto(UUID id, String name, String imageUrl, UUID parentId, Instant created) {
+    public CategoryDto(UUID id, String name, String imageUrl, UUID parentId, Instant created, String displayName, String desc) {
         this.id = id;
         this.name = name;
         this.imageUrl = imageUrl;
         this.parentId = parentId;
         this.created = created;
+        this.displayName = displayName;
+        this.desc = desc;
     }
 
     public UUID getId() {
@@ -64,5 +70,21 @@ public class CategoryDto {
 
     public void setCreated(Instant created) {
         this.created = created;
+    }
+
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
+    }
+
+    public String getDesc() {
+        return desc;
+    }
+
+    public void setDesc(String desc) {
+        this.desc = desc;
     }
 }

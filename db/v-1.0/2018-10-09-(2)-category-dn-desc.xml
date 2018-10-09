@@ -1,0 +1,146 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+     <changeSet id="2018-10-09-(2)-category-dn-desc-add" author="Alex">
+        <addColumn tableName="categories">
+            <column name="display_name" type="varchar(32)"/>
+        </addColumn>
+        <addColumn tableName="categories">
+            <column name="description" type="varchar(32)"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="2018-10-09-(2)-category-dn-desc-update" author="Alex">
+        <update tableName="categories">
+            <column name="display_name" value="Chat"/>
+            <where>name = 'CHAT'</where>
+        </update>
+        <update tableName="categories">
+            <column name="display_name" value="Event"/>
+            <where>name = 'EVENT'</where>
+        </update>
+        <update tableName="categories">
+            <column name="display_name" value="Place"/>
+            <where>name = 'PLACE'</where>
+        </update>
+        <update tableName="categories">
+            <column name="display_name" value="Place"/>
+            <where>name = 'PLACE'</where>
+        </update>
+        <update tableName="categories">
+            <column name="display_name" value="Dining event"/>
+            <where>name = 'DINING_EVENT'</where>
+        </update>
+        <update tableName="categories">
+            <column name="display_name" value="It event"/>
+            <where>name = 'IT'</where>
+        </update>
+        <update tableName="categories">
+            <column name="display_name" value="Festival event"/>
+            <where>name = 'FESTIVAL_EVENT'</where>
+        </update>
+        <update tableName="categories">
+            <column name="display_name" value="Comedy event"/>
+            <where>name = 'COMEDY_EVENT'</where>
+        </update>
+        <update tableName="categories">
+            <column name="display_name" value="Fitness event"/>
+            <where>name = 'FITNESS'</where>
+        </update>
+        <update tableName="categories">
+            <column name="display_name" value="Shopping event"/>
+            <where>name = 'SHOPPING'</where>
+        </update>
+        <update tableName="categories">
+            <column name="display_name" value="Religious event"/>
+            <where>name = 'RELIGIOUS_EVENT'</where>
+        </update>
+        <update tableName="categories">
+            <column name="display_name" value="Food event"/>
+            <where>name = 'FOOD-TASTING'</where>
+        </update>
+        <update tableName="categories">
+            <column name="display_name" value="Volunteering event"/>
+            <where>name = 'VOLUNTEERING'</where>
+        </update>
+        <update tableName="categories">
+            <column name="display_name" value="Book event"/>
+            <where>name = 'BOOK_EVENT'</where>
+        </update>
+        <update tableName="categories">
+            <column name="display_name" value="Movie event"/>
+            <where>name = 'MOVIE_EVENT'</where>
+        </update>
+        <update tableName="categories">
+            <column name="display_name" value="Dance event"/>
+            <where>name = 'DANCE_EVEN'</where>
+        </update>
+        <update tableName="categories">
+            <column name="display_name" value="Nightlife"/>
+            <where>name = 'NIGHTLIFE'</where>
+        </update>
+        <update tableName="categories">
+            <column name="display_name" value="Art event"/>
+            <where>name = 'ART_EVENT'</where>
+        </update>
+        <update tableName="categories">
+            <column name="display_name" value="Sport event"/>
+            <where>name = 'SPORTS_EVENT'</where>
+        </update>
+        <update tableName="categories">
+            <column name="display_name" value="Theater"/>
+            <where>name = 'THEATER_EVENT'</where>
+        </update>
+        <update tableName="categories">
+            <column name="display_name" value="Conference"/>
+            <where>name = 'CONFERENCE_EVENT'</where>
+        </update>
+        <update tableName="categories">
+            <column name="display_name" value="Family event"/>
+            <where>name = 'FAMILY_EVENT'</where>
+        </update>
+        <update tableName="categories">
+            <column name="display_name" value="Meetup"/>
+            <where>name = 'MEETUP'</where>
+        </update>
+        <update tableName="categories">
+            <column name="display_name" value="Lecture"/>
+            <where>name = 'LECTURE'</where>
+        </update>
+        <update tableName="categories">
+            <column name="display_name" value="Music event"/>
+            <where>name = 'MUSIC_EVENT'</where>
+        </update>
+        <update tableName="categories">
+            <column name="display_name" value="Workshop"/>
+            <where>name = 'WORKSHOP'</where>
+        </update>
+        <update tableName="categories">
+            <column name="display_name" value="Celebration"/>
+            <where>name = 'CELEBRATION'</where>
+        </update>
+        <update tableName="categories">
+            <column name="display_name" value="Activity"/>
+            <where>name = 'ACTIVITY'</where>
+        </update>
+        <update tableName="categories">
+            <column name="display_name" value="Activity"/>
+            <where>name = 'ACTIVITY'</where>
+        </update>
+        <update tableName="categories">
+            <column name="display_name" value="Activity"/>
+            <where>name = 'ACTIVITY'</where>
+        </update>
+    </changeSet>
+
+    <changeSet id="2018-10-09-(2)-category-dn-desc-update-constraint" author="Alex">
+        <addNotNullConstraint columnDataType="varchar(32)" columnName="display_name" tableName="categories"/>
+    </changeSet>
+
+
+
+</databaseChangeLog>
