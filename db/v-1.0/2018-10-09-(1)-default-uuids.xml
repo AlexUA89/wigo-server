@@ -1,0 +1,34 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <property name="uuid_type" value="uuid" dbms="postgresql"/>
+    <property name="uuid_function" value="uuid_generate_v4()" dbms="postgresql"/>
+
+    <changeSet  id="2018-10-09-(1)-default-uuids-statuses" author="Alex">
+        <addDefaultValue columnDataType="${uuid_type}"
+                         columnName="id"
+                         defaultValueComputed="${uuid_function}"
+                         tableName="statuses"/>
+    </changeSet>
+
+    <changeSet  id="2018-10-09-(1)-default-uuids-messages" author="Alex">
+        <addDefaultValue columnDataType="${uuid_type}"
+                         columnName="id"
+                         defaultValueComputed="${uuid_function}"
+                         tableName="messages"/>
+    </changeSet>
+
+    <changeSet  id="2018-10-09-(1)-default-uuids-users" author="Alex">
+        <addDefaultValue columnDataType="${uuid_type}"
+                         columnName="id"
+                         defaultValueComputed="${uuid_function}"
+                         tableName="users"/>
+    </changeSet>
+
+
+
+</databaseChangeLog>

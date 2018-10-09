@@ -1,0 +1,42 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <property name="now" value="now()" dbms="postgresql"/>
+
+    <changeSet id="2018-10-09-(0)-created-date-status" author="Alex">
+        <addColumn tableName="statuses">
+            <column name="created" type="timestamp(6)" defaultValue="${now}">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="2018-10-09-(0)-created-date-user" author="Alex">
+        <addColumn tableName="users">
+            <column name="created" type="timestamp(6)" defaultValue="${now}">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="2018-10-09-(0)-created-date-category" author="Alex">
+        <addColumn tableName="categories">
+            <column name="created" type="timestamp(6)" defaultValue="${now}">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="2018-10-09-(0)-created-date-hashtags" author="Alex">
+        <addColumn tableName="status_hashtags">
+            <column name="created" type="timestamp(6)" defaultValue="${now}">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+</databaseChangeLog>

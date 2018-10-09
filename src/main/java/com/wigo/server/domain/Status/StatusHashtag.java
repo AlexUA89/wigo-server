@@ -1,5 +1,6 @@
 package com.wigo.server.domain.Status;
 
+import java.time.Instant;
 import java.util.UUID;
 
 public class StatusHashtag {
@@ -8,12 +9,15 @@ public class StatusHashtag {
 
     private String hashtag;
 
+    private Instant created;
+
     public StatusHashtag() {
     }
 
-    public StatusHashtag(UUID statusId, String hashtag) {
+    public StatusHashtag(UUID statusId, String hashtag, Instant created) {
         this.statusId = statusId;
         this.hashtag = hashtag;
+        this.created = created;
     }
 
     public UUID getStatusId() {
@@ -32,4 +36,11 @@ public class StatusHashtag {
         this.hashtag = hashtag;
     }
 
+    public Instant getCreated() {
+        return created;
+    }
+
+    public void setCreated(Instant created) {
+        this.created = created;
+    }
 }

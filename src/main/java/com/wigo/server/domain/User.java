@@ -1,5 +1,6 @@
 package com.wigo.server.domain;
 
+import java.time.Instant;
 import java.util.UUID;
 
 public class User {
@@ -14,16 +15,19 @@ public class User {
 
     private String fbId;
 
+    private Instant created;
+
     public User(){
 
     }
 
-    public User(UUID id, String nickname, String name, String email, String fbId) {
+    public User(UUID id, String nickname, String name, String email, String fbId, Instant created) {
         this.id = id;
         this.nickname = nickname;
         this.name = name;
         this.email = email;
         this.fbId = fbId;
+        this.created = created;
     }
 
     public UUID getId() {
@@ -64,5 +68,13 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Instant getCreated() {
+        return created;
+    }
+
+    public void setCreated(Instant created) {
+        this.created = created;
     }
 }

@@ -31,7 +31,7 @@ public class LoginController {
     public LoginDto login(@RequestBody LoginData loginData) {
         // TODO: add remote logout support
         FbData fbData = restOperations.getForObject(FB_ME_URL, FbData.class, loginData.getFbToken());
-        User user = new User(null, fbData.name, fbData.name, fbData.email, fbData.id);
+        User user = new User(null, fbData.name, fbData.name, fbData.email, fbData.id, null);
         User oldUser = userDao.getUserByFbId(fbData.id);
         if (oldUser == null)
             userDao.createUser(user);

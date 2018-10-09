@@ -72,7 +72,7 @@ public class StatusDao {
 
     private void insertHashtagsImages(StatusDto status) {
         insertHashtags.executeBatch(status.getHashtags().stream()
-                .map(h -> beanParameterSource(new StatusHashtag(status.getId(), h)))
+                .map(h -> beanParameterSource(new StatusHashtag(status.getId(), h, null)))
                 .toArray(SqlParameterSource[]::new));
         insertImages.executeBatch(status.getImages().stream()
                 .map(h -> beanParameterSource(new StatusImage(status.getId(), h)))

@@ -30,11 +30,13 @@ public class StatusDto {
 
     private List<URL> images = new ArrayList<>();
 
+    private Instant created;
+
     public StatusDto(){
 
     }
 
-    public StatusDto(UUID id, UUID userId, double latitude, double longitude, String name, String text, URL url, Instant startDate, Instant endDate, Set<String> hashtags, UUID category_id, List<URL> images) {
+    public StatusDto(UUID id, UUID userId, double latitude, double longitude, String name, String text, URL url, Instant startDate, Instant endDate, Set<String> hashtags, UUID category_id, List<URL> images, Instant created) {
         this.id = id;
         this.userId = userId;
         this.latitude = latitude;
@@ -47,6 +49,7 @@ public class StatusDto {
         this.hashtags = hashtags;
         this.category_id = category_id;
         this.images = images;
+        this.created = created;
     }
 
     public UUID getId() {
@@ -143,5 +146,21 @@ public class StatusDto {
 
     public void setCategoryId(UUID category_id) {
         this.category_id = category_id;
+    }
+
+    public UUID getCategory_id() {
+        return category_id;
+    }
+
+    public void setCategory_id(UUID category_id) {
+        this.category_id = category_id;
+    }
+
+    public Instant getCreated() {
+        return created;
+    }
+
+    public void setCreated(Instant created) {
+        this.created = created;
     }
 }

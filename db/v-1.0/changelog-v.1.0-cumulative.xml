@@ -9,5 +9,7 @@
     <include file="2018-10-04-create-category-table.xml" relativeToChangelogFile="true"/>
     <include file="2018-10-07-add-non-null-category_id-status.xml" relativeToChangelogFile="true"/>
     <include file="2018-10-08-fill-category-table-script.xml" relativeToChangelogFile="true"/>
+    <include file="2018-10-09-(0)-created-date.xml" relativeToChangelogFile="true"/>
+    <include file="2018-10-09-(1)-default-uuids.xml" relativeToChangelogFile="true"/>
 
 </databaseChangeLog>

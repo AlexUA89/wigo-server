@@ -1,5 +1,6 @@
 package com.wigo.server.dto;
 
+import java.time.Instant;
 import java.util.UUID;
 
 public class CategoryDto {
@@ -12,14 +13,17 @@ public class CategoryDto {
 
     private UUID parentId;
 
+    private Instant created;
+
     public CategoryDto() {
     }
 
-    public CategoryDto(UUID id, String name, String imageUrl, UUID parentId) {
+    public CategoryDto(UUID id, String name, String imageUrl, UUID parentId, Instant created) {
         this.id = id;
         this.name = name;
         this.imageUrl = imageUrl;
         this.parentId = parentId;
+        this.created = created;
     }
 
     public UUID getId() {
@@ -52,5 +56,13 @@ public class CategoryDto {
 
     public void setParentId(UUID parentId) {
         this.parentId = parentId;
+    }
+
+    public Instant getCreated() {
+        return created;
+    }
+
+    public void setCreated(Instant created) {
+        this.created = created;
     }
 }
