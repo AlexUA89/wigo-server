@@ -18,4 +18,4 @@
 /loaders/apiloaders/output.txt
 /loaders/apiloaders/gradlew.bat
 /loaders/apiloaders/gradlew
-main.log
+main.log*
