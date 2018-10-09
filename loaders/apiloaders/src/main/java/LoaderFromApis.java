@@ -5,6 +5,9 @@ import sheet.SheetUploader;
 
 import java.io.*;
 import java.security.GeneralSecurityException;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,6 +32,7 @@ public class LoaderFromApis {
     }
 
     private static List<SearchParameters> getSearchParameters() throws IOException {
+        final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy:HH:mm:ss").withZone(ZoneId.systemDefault());
         List<SearchParameters> result = new ArrayList<>();
         try (BufferedReader file = new BufferedReader(new FileReader(new File(PARAMETERS_FILE)))) {
             String row = file.readLine();
@@ -38,7 +42,9 @@ public class LoaderFromApis {
                         Double.parseDouble(args[0]),
                         Double.parseDouble(args[1]),
                         Double.parseDouble(args[2]),
-                        args[3]
+                        args[5],
+                        Instant.from(formatter.parse(args[3])),
+                        Instant.from(formatter.parse(args[4]))
                 ));
             }
         }

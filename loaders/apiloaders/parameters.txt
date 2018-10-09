@@ -1,2 +1,2 @@
-Latitude   ;Longitude   ;Radius km   ;Description
-50.450945  ;30.522526   ;100         ;Kyiv
+Latitude   ;Longitude   ;Radius km   ;Start date             ;End date                ;Description
+50.450945  ;30.522526   ;100         ;10/10/2018:00:00:00    ;10/10/2018:23:59:59     ;Kyiv
